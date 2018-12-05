@@ -1,0 +1,321 @@
+# Time-stamp: <2018-12-04 22:51:22 PST (mhb)>
+
+
+* template for adding code
+  #+begin_src emacs-lisp
+  #+end_src
+* future work
+
+what the hell is abbrev tables? abbrev_defs file.
+
+
+* notes on keys
+
+** to reformat the buffer
+
+C-x h to highlight/select/mark the whole buffer
+C-M-\ to run indent-region
+
+* interface stuff
+
+  #+begin_src emacs-lisp
+(setq scroll-conservatively 3)
+;(require 'zenburn-theme)
+
+;; misc interface stuff
+(show-paren-mode t) ;highlight matching parens
+(setq x-stretch-cursor t) ;show full character widths
+(tool-bar-mode 0) ; no clickable gui icons, no floppy disks to save
+(column-number-mode t) ; show column number with line number in mode line
+(global-hl-line-mode t)
+(setq-default indent-tabs-mode nil)
+
+;; otherwise put these two lines back under go-autocomplete below
+(add-hook 'after-init-hook 'global-company-mode)
+  #+end_src
+
+** custom keys
+  #+begin_src emacs-lisp
+(global-set-key (kbd "C-x g") 'magit-status)
+  #+end_src
+* environmental setup
+  #+begin_src emacs-lisp
+  (require 'exec-path-from-shell)
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "GOPATH")
+
+;;; mac specific keys
+(when (memq window-system '(mac ns))
+  (defvar mac-command-key-is-meta)
+  (defvar mac-command-modifier)
+  (defvar mac-option-key-is-meta)
+  (defvar mac-option-modifier)
+  (setq mac-command-key-is-meta nil
+        mac-command-modifier nil
+        mac-option-key-is-meta t
+        mac-option-modifier 'meta)
+  ;; this relies on having installed gnu coreutils, because normal ls
+  ;; doesn't support emacs features
+  (let ((has-gnu-ls (executable-find "gls")))
+    (if has-gnu-ls
+      (setq insert-directory-program has-gnu-ls))))
+ #+end_src
+
+* file access
+  #+begin_src emacs-lisp
+    ;;Most of the notices about lockfiles seem to be spurious. I rarely
+    ;;edit the same file in two different eamcs-es.
+    (setq create-lockfiles nil)
+  #+end_src
+
+** time stamps
+if a timestamp comment is at the top, update the timestamp
+  #+begin_src emacs-lisp
+  (add-hook 'before-save-hook 'time-stamp)
+
+    (setq 
+      time-stamp-active t          ; do enable time-stamps
+      time-stamp-line-limit 10     ; check first 10 buffer lines for
+                                   ; 'Time-stamp:'
+      time-stamp-format "%:y-%02m-%02d %02H:%02M:%02S %Z (%u)") ; date format
+  #+end_src
+
+*** check this out for a key to insert time stamps in the future
+ (format-time-string FORMAT-STRING &optional TIME UNIVERSAL)
+
+** auto-save 
+   #+begin_src emacs-lisp
+(setq vc-make-backup-files t)
+(setq version-control t ; Use version numbers for backups.
+      kept-new-versions 10 ; Number of newest versions to keep.
+      kept-old-versions 1 ; Number of oldest versions to keep.
+      delete-old-versions t ; Don't ask to delete excess backup versions.
+      backup-by-copying t) ; Copy all files, don't rename them.
+;;;  don't pollute the fs, put everything into my personal directory
+(defvar mhb-auto-save-folder (expand-file-name "~/.emacs.d/auto-save/"))
+(make-directory mhb-auto-save-folder t) ; make the dir if it doesn't exist
+
+(setq backup-directory-alist
+      (list (cons "." mhb-auto-save-folder)))
+(setq auto-save-file-name-transforms
+      (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" (concat mhb-auto-save-folder "\\2"))))
+   #+end_src
+
+
+** ido
+   #+begin_src emacs-lisp
+ (require 'ido)
+ (ido-mode t)
+ (setq ido-case-fold t)
+ (setq ido-enable-flex-matching t)
+   #+end_src
+
+possible replacement in ivy mode, with counsel and swiper
+   #+begin_src emacs-lisp
+   (require 'ivy)
+   (ivy-mode 1)
+
+   (require 'flx)
+   (setq ivy-re-builders-alist
+     '((t . ivy--regex-plus)))
+
+   ;; not sure what this does, +research
+   ;;(setq ivy-initial-inputs-alist nil)
+
+   #+end_src
+
+
+** tramp
+   #+begin_src emacs-lisp
+   ;; this is going to need adjustment on windows for ssh and controlmaster
+   ;; controlmaster should match ssh/config to reuse those configurations
+   (use-package tramp)
+   :config
+   (setq tramp-default-method "rsync"
+         tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='~/.ssh/master-%%r@%%h:%%p' -o ControlPersist=15m")
+   #+end_src
+* flyspell
+  #+begin_src emacs-lisp
+(require 'flyspell)
+(add-hook 'text-mode-hook 'flyspell-mode)
+(setq flyspell-issue-message-flag nil)
+(global-set-key (kbd "<f8>") 'flyspell-buffer)
+  #+end_src
+* org mode
+
+  interesting thing, is to use 'easy templates'
+  to insert a source block, type "<s" and then hit tab.
+
+  works for anything that can be completed.
+
+  #+BEGIN_SRC emacs-lisp
+(require 'org)
+(require 'ob-tangle)
+(require 'ob-dot)
+(require 'ox-latex)
+
+(require 'org-journal)
+
+(setq org-src-fontify-natively t)
+(add-to-list 'org-babel-load-languages '(dot . t))
+(setq org-confirm-babel-evaluate nil)
+  #+END_SRC
+* programming languages
+
+  #+BEGIN_SRC emacs-lisp
+;; flycheck for everything
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+  #+END_SRC
+
+** shell
+
+   #+begin_src emacs-lisp
+   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+   #+end_src
+*** bats
+   #+begin_src emacs-lisp
+   ;; bats is bash at
+   (add-to-list 'auto-mode-alist '("\\.bats\\'" . shell-script-mode))
+   #+end_src
+** common lisp
+
+Warning (emacs): To restore SLIME in this session, customize ‘lisp-mode-hook’
+and replace ‘sly-editing-mode’ with ‘slime-lisp-mode-hook’.
+Warning (emacs): ‘sly.el’ loaded OK. To use SLY, customize ‘lisp-mode-hook’ and
+replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
+
+   #+begin_src emacs-lisp
+   ;(load (expand-file-name "~/quicklisp/slime-helper.el"))
+  ;; Replace "sbcl" with the path to your implementation
+  ;;(setq inferior-lisp-program "sbcl")
+   #+end_src
+** rust
+   #+begin_src emacs-lisp
+     (use-package rust-mode)
+
+     (add-hook 'rust-mode-hook
+               (lambda ()
+                 (add-hook 'before-save-hook 'rust-enable-format-on-save nil 'make-it-a-local-hook)))
+     (add-hook 'rust-mode-hook 'flyspell-prog-mode)
+     (add-hook 'rust-mode-hook #'racer-mode)
+
+     (with-eval-after-load 'rust-mode
+       (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
+     (add-hook 'racer-mode-hook #'eldoc-mode)
+     (add-hook 'racer-mode-hook #'company-mode)
+
+     (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+     (setq company-tooltip-align-annotations t)
+   #+end_src
+
+** GO 
+
+   #+begin_src emacs-lisp
+(use-package flycheck-gometalinter
+  :ensure t
+  :config
+  (progn
+    (flycheck-gometalinter-setup)))
+
+       (require 'go-guru)
+       ; Use goimports instead of go-fmt
+       (setq gofmt-command "goimports")
+       (add-hook 'go-mode-hook
+               (lambda ()
+                 (add-hook 'before-save-hook 'gofmt-before-save nil 'make-it-a-local-hook)))
+       (add-hook 'go-mode-hook
+          (lambda ()
+          (set (make-local-variable 'company-backends) '(company-go))
+            (company-mode)))
+     (add-hook 'go-mode-hook 'flyspell-prog-mode)
+     ;; go get -u github.com/nsf/gocode
+     ;; go get -v github.com/rogpeppe/godef
+     ;; go get -v golang.org/x/tools/cmd/guru
+     ;; company mode instead of autocomplete
+     ;;(require 'go-autocomplete)
+
+     ;; Godef jump key binding, this matches 'everything-else' apparently
+     (local-set-key (kbd "M-.") 'godef-jump)
+
+     (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
+   #+end_src
+
+** R statistical language config of ess
+   #+begin_src emacs-lisp
+   (require 'ess-site)
+   (add-to-list 'auto-mode-alist '("\\.R\\'" . R-mode))
+   (add-to-list 'auto-mode-alist '("\\.r\\'" . R-mode))
+
+   (require 'ob-R)
+   (add-to-list 'org-babel-load-languages '(R . t))
+   (add-to-list 'org-babel-load-languages '(gnuplot . t))
+   #+end_src
+
+** scheme
+   #+begin_src emacs-lisp
+   (use-package geiser
+   :config
+   ;(setq geiser-repl-use-other-window nil)
+   (setq geiser-active-implementations '(guile)
+         geiser-default-implementation 'guile)
+   )
+   (require 'ob-scheme)
+   (add-to-list 'org-babel-load-languages '(scheme . t))
+   #+end_src
+** javascript
+   #+begin_src emacs-lisp
+   (setq js-indent-level 2)
+   #+end_src
+* bbdb 
+  #+begin_src emacs-lisp
+(require 'bbdb)
+(bbdb-initialize)
+  #+end_src
+
+* erc
+  the following three lines don't make any sense, but whatever.
+
+  erc config that loads before erc is loaded.
+  erc config does not load, until you run erc, so to prime erc, we
+  need to have configured it ahead of time
+
+  #+begin_src emacs-lisp
+  (use-package erc)
+  (require 'erc-social-graph)
+  #+end_src
+  
+* prologue - other stuff from initial after-init file
+
+why must this be after everything? I don't think the desktop stuff
+works anyway.
+
+
+  #+begin_src emacs-lisp
+;; desktop configuration. automatically save and load emacs buffers.
+;;(require 'desktop)
+;;(desktop-save-mode t)
+;;(defvar mhb-desktop-save-folder "~/.emacs.d/desktop/")
+;;(make-directory mhb-desktop-save-folder t) ; make the dir if it doesn't exist
+;;(setq desktop-path (list mhb-desktop-save-folder))
+;;(setq desktop-dirname mhb-desktop-save-folder)
+;;(setq desktop-base-file-name "emacs-desktop")
+
+;;(add-to-list 'desktop-modes-not-to-save 'dired-mode)
+;;(add-to-list 'desktop-modes-not-to-save 'Info-mode)
+;;(add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
+;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
+
+(defun my-desktop-save ()
+  (interactive)
+  ;; Don't call desktop-save-in-desktop-dir, as it prints a message.
+  (if (eq (desktop-owner) (emacs-pid))
+      (desktop-save desktop-dirname)))
+;;(add-hook 'auto-save-hook 'my-desktop-save)
+;; end desktop config
+  #+end_src
+
+  #+begin_src emacs-lisp
+  #+end_src
