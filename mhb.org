@@ -1,26 +1,48 @@
-# Time-stamp: <2018-12-04 22:51:22 PST (mhb)>
+# Time-stamp: <2019-01-07 12:31:14 PST (mhb)>
 
+* general notes
+variables are prefixed with my initials to attempt to provide uniqueness
 
 * template for adding code
   #+begin_src emacs-lisp
   #+end_src
 * future work
 
-what the hell is abbrev tables? abbrev_defs file.
+what is abbrev tables? abbrev_defs file?
 
 
 * notes on keys
 
 ** to reformat the buffer
-
 C-x h to highlight/select/mark the whole buffer
 C-M-\ to run indent-region
+
+* packages beyond the default 
+  #+begin_src emacs-lisp
+  ;; Bootstrap `use-package'
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
+
+  (use-package magit
+    :ensure t)
+
+  (use-package delight
+    :ensure t)
+  #+end_src
+
+
 
 * interface stuff
 
   #+begin_src emacs-lisp
 (setq scroll-conservatively 3)
 ;(require 'zenburn-theme)
+(use-package zenburn-theme
+  :ensure t)
 
 ;; misc interface stuff
 (show-paren-mode t) ;highlight matching parens
@@ -40,20 +62,14 @@ C-M-\ to run indent-region
   #+end_src
 * environmental setup
   #+begin_src emacs-lisp
-  (require 'exec-path-from-shell)
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "GOPATH")
-
-;;; mac specific keys
+(require 'exec-path-from-shell)
 (when (memq window-system '(mac ns))
-  (defvar mac-command-key-is-meta)
-  (defvar mac-command-modifier)
-  (defvar mac-option-key-is-meta)
-  (defvar mac-option-modifier)
   (setq mac-command-key-is-meta nil
         mac-command-modifier nil
         mac-option-key-is-meta t
         mac-option-modifier 'meta)
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "GOPATH")
   ;; this relies on having installed gnu coreutils, because normal ls
   ;; doesn't support emacs features
   (let ((has-gnu-ls (executable-find "gls")))
@@ -62,22 +78,21 @@ C-M-\ to run indent-region
  #+end_src
 
 * file access
+Most of the notices about lockfiles seem to be spurious. I rarely edit
+the same file in two different eamcs-es.
   #+begin_src emacs-lisp
-    ;;Most of the notices about lockfiles seem to be spurious. I rarely
-    ;;edit the same file in two different eamcs-es.
     (setq create-lockfiles nil)
   #+end_src
 
 ** time stamps
 if a timestamp comment is at the top, update the timestamp
   #+begin_src emacs-lisp
-  (add-hook 'before-save-hook 'time-stamp)
-
     (setq 
       time-stamp-active t          ; do enable time-stamps
       time-stamp-line-limit 10     ; check first 10 buffer lines for
                                    ; 'Time-stamp:'
       time-stamp-format "%:y-%02m-%02d %02H:%02M:%02S %Z (%u)") ; date format
+    (add-hook 'before-save-hook 'time-stamp)
   #+end_src
 
 *** check this out for a key to insert time stamps in the future
@@ -91,16 +106,15 @@ if a timestamp comment is at the top, update the timestamp
       kept-old-versions 1 ; Number of oldest versions to keep.
       delete-old-versions t ; Don't ask to delete excess backup versions.
       backup-by-copying t) ; Copy all files, don't rename them.
-;;;  don't pollute the fs, put everything into my personal directory
-(defvar mhb-auto-save-folder (expand-file-name "~/.emacs.d/auto-save/"))
+;;;  don't pollute the fs
+(defconst mhb-auto-save-folder (expand-file-name "~/.emacs.d/auto-save/" "where auto-save files and backups will be stored"))
 (make-directory mhb-auto-save-folder t) ; make the dir if it doesn't exist
 
 (setq backup-directory-alist
-      (list (cons "." mhb-auto-save-folder)))
+  (list (cons "." mhb-auto-save-folder)))
 (setq auto-save-file-name-transforms
-      (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" (concat mhb-auto-save-folder "\\2"))))
+  (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" (concat mhb-auto-save-folder "\\2"))))
    #+end_src
-
 
 ** ido
    #+begin_src emacs-lisp
@@ -142,7 +156,6 @@ possible replacement in ivy mode, with counsel and swiper
 (global-set-key (kbd "<f8>") 'flyspell-buffer)
   #+end_src
 * org mode
-
   interesting thing, is to use 'easy templates'
   to insert a source block, type "<s" and then hit tab.
 
@@ -176,7 +189,6 @@ possible replacement in ivy mode, with counsel and swiper
    #+end_src
 *** bats
    #+begin_src emacs-lisp
-   ;; bats is bash at
    (add-to-list 'auto-mode-alist '("\\.bats\\'" . shell-script-mode))
    #+end_src
 ** common lisp
@@ -189,7 +201,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
    #+begin_src emacs-lisp
    ;(load (expand-file-name "~/quicklisp/slime-helper.el"))
   ;; Replace "sbcl" with the path to your implementation
-  ;;(setq inferior-lisp-program "sbcl")
+  (setq inferior-lisp-program "sbcl")
    #+end_src
 ** rust
    #+begin_src emacs-lisp
@@ -212,6 +224,18 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
    #+end_src
 
 ** GO 
+#+begin_src shell
+go get -u -v golang.org/x/tools/cmd/goimports
+go get -u -v github.com/nsf/gocode
+go get -u -v github.com/rogpeppe/godef
+go get -u -v golang.org/x/tools/cmd/guru
+
+# metalinter
+brew tap alecthomas/homebrew-tap
+brew install gometalinter
+#+end_src
+
+
 
    #+begin_src emacs-lisp
 (use-package flycheck-gometalinter
@@ -219,6 +243,9 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
   :config
   (progn
     (flycheck-gometalinter-setup)))
+(require 'company)
+(require 'company-go)
+;(company-quickhelp-mode)
 
        (require 'go-guru)
        ; Use goimports instead of go-fmt
@@ -231,9 +258,6 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
           (set (make-local-variable 'company-backends) '(company-go))
             (company-mode)))
      (add-hook 'go-mode-hook 'flyspell-prog-mode)
-     ;; go get -u github.com/nsf/gocode
-     ;; go get -v github.com/rogpeppe/godef
-     ;; go get -v golang.org/x/tools/cmd/guru
      ;; company mode instead of autocomplete
      ;;(require 'go-autocomplete)
 
@@ -241,11 +265,17 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
      (local-set-key (kbd "M-.") 'godef-jump)
 
      (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
+     ;; (add-hook 'go-mode-hook 'flycheck-mode)
+
+     (unless (package-installed-p 'go-tag)
+       (package-refresh-contents)
+       (package-install 'go-tag))
+     (setq go-tag-args (list "-transform" "camelcase"))
    #+end_src
 
-** R statistical language config of ess
+** R programming statistical language config of ess
    #+begin_src emacs-lisp
-   (require 'ess-site)
+   (use-package ess :defer t)
    (add-to-list 'auto-mode-alist '("\\.R\\'" . R-mode))
    (add-to-list 'auto-mode-alist '("\\.r\\'" . R-mode))
 
@@ -257,7 +287,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 ** scheme
    #+begin_src emacs-lisp
    (use-package geiser
-   :config
+     :config
    ;(setq geiser-repl-use-other-window nil)
    (setq geiser-active-implementations '(guile)
          geiser-default-implementation 'guile)
@@ -291,7 +321,6 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 
 why must this be after everything? I don't think the desktop stuff
 works anyway.
-
 
   #+begin_src emacs-lisp
 ;; desktop configuration. automatically save and load emacs buffers.
