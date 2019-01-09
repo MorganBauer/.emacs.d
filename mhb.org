@@ -1,4 +1,4 @@
-# Time-stamp: <2019-01-07 12:31:14 PST (mhb)>
+# Time-stamp: <2019-01-09 15:26:18 PST (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -62,7 +62,9 @@ C-M-\ to run indent-region
   #+end_src
 * environmental setup
   #+begin_src emacs-lisp
-(require 'exec-path-from-shell)
+(use-package exec-path-from-shell
+  :ensure t)
+
 (when (memq window-system '(mac ns))
   (setq mac-command-key-is-meta nil
         mac-command-modifier nil
@@ -126,10 +128,12 @@ if a timestamp comment is at the top, update the timestamp
 
 possible replacement in ivy mode, with counsel and swiper
    #+begin_src emacs-lisp
-   (require 'ivy)
+   (use-package ivy
+     :ensure t)
    (ivy-mode 1)
 
-   (require 'flx)
+   (use-package flx
+     :ensure t)
    (setq ivy-re-builders-alist
      '((t . ivy--regex-plus)))
 
@@ -150,7 +154,8 @@ possible replacement in ivy mode, with counsel and swiper
    #+end_src
 * flyspell
   #+begin_src emacs-lisp
-(require 'flyspell)
+(use-package flyspell
+  :ensure t)
 (add-hook 'text-mode-hook 'flyspell-mode)
 (setq flyspell-issue-message-flag nil)
 (global-set-key (kbd "<f8>") 'flyspell-buffer)
@@ -167,7 +172,7 @@ possible replacement in ivy mode, with counsel and swiper
 (require 'ob-dot)
 (require 'ox-latex)
 
-(require 'org-journal)
+;;(use-package org-journal)
 
 (setq org-src-fontify-natively t)
 (add-to-list 'org-babel-load-languages '(dot . t))
@@ -185,6 +190,8 @@ possible replacement in ivy mode, with counsel and swiper
 ** shell
 
    #+begin_src emacs-lisp
+   (use-package rainbow-delimiters
+     :ensure t)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
    #+end_src
 *** bats
@@ -205,7 +212,8 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
    #+end_src
 ** rust
    #+begin_src emacs-lisp
-     (use-package rust-mode)
+     (use-package rust-mode
+       :ensure t)
 
      (add-hook 'rust-mode-hook
                (lambda ()
@@ -213,14 +221,14 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
      (add-hook 'rust-mode-hook 'flyspell-prog-mode)
      (add-hook 'rust-mode-hook #'racer-mode)
 
-     (with-eval-after-load 'rust-mode
-       (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+     ;;     (with-eval-after-load 'rust-mode
+     ;;       (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
      (add-hook 'racer-mode-hook #'eldoc-mode)
-     (add-hook 'racer-mode-hook #'company-mode)
+     ;;     (add-hook 'racer-mode-hook #'company-mode)
 
-     (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-     (setq company-tooltip-align-annotations t)
+;;   (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+  ;;   (setq company-tooltip-align-annotations t)
    #+end_src
 
 ** GO 
@@ -238,31 +246,35 @@ brew install gometalinter
 
 
    #+begin_src emacs-lisp
-(use-package flycheck-gometalinter
-  :ensure t
-  :config
-  (progn
-    (flycheck-gometalinter-setup)))
-(require 'company)
-(require 'company-go)
+;(use-package flycheck-gometalinter
+ ; :ensure t
+ ; :config
+ ; (progn
+ ;   (flycheck-gometalinter-setup)))
+(use-package company
+  :ensure t)
+(use-package company-go
+  :ensure t)
 ;(company-quickhelp-mode)
 
-       (require 'go-guru)
+       (use-package go-guru
+         :ensure t
+         :defer 30)
        ; Use goimports instead of go-fmt
        (setq gofmt-command "goimports")
        (add-hook 'go-mode-hook
                (lambda ()
-                 (add-hook 'before-save-hook 'gofmt-before-save nil 'make-it-a-local-hook)))
-       (add-hook 'go-mode-hook
-          (lambda ()
-          (set (make-local-variable 'company-backends) '(company-go))
-            (company-mode)))
+                 (add-hook 'before-save-hook 'gofmt-before-save nil 'make-it-a-local-hook)
+                 ;; Godef jump key binding, this matches 'everything-else' apparently
+                 (local-set-key (kbd "C-c C-j") 'go-guru-definition)))
+       ;(add-hook 'go-mode-hook
+       ;          (lambda ()
+          ;;(set (make-local-variable 'company-backends) '(company-go))
+            ;;(company-mode)))
      (add-hook 'go-mode-hook 'flyspell-prog-mode)
      ;; company mode instead of autocomplete
      ;;(require 'go-autocomplete)
 
-     ;; Godef jump key binding, this matches 'everything-else' apparently
-     (local-set-key (kbd "M-.") 'godef-jump)
 
      (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
      ;; (add-hook 'go-mode-hook 'flycheck-mode)
@@ -287,6 +299,7 @@ brew install gometalinter
 ** scheme
    #+begin_src emacs-lisp
    (use-package geiser
+     :ensure t
      :config
    ;(setq geiser-repl-use-other-window nil)
    (setq geiser-active-implementations '(guile)
@@ -301,8 +314,10 @@ brew install gometalinter
    #+end_src
 * bbdb 
   #+begin_src emacs-lisp
-(require 'bbdb)
-(bbdb-initialize)
+(use-package bbdb
+  ;; :ensure t
+  ;;  :init (bbdb-initialize)
+)
   #+end_src
 
 * erc
@@ -313,8 +328,9 @@ brew install gometalinter
   need to have configured it ahead of time
 
   #+begin_src emacs-lisp
-  (use-package erc)
-  (require 'erc-social-graph)
+  (use-package erc
+    :ensure t)
+    ;;  (require 'erc-social-graph)
   #+end_src
   
 * prologue - other stuff from initial after-init file
