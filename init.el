@@ -47,7 +47,11 @@
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 
-;; too clever, if someone ever adds one by default we'll use that instead of breaking, I'd rather break
+;; too clever, if someone ever adds one by default we'll use that instead of
+;; breaking by pulling from some unknown source, I'd rather break. in fact, I
+;; know the sources, so we have listed them explicitly, and have basic
+;; improvements of httpS for gnu archives.
+;;
 ;;(defun mhb-add-pachage-archive (package-archive-name package-archive-location)
 ;;  (unless (assoc-default package-archive-name package-archives)
 ;;    (add-to-list 'package-archives (cons package-archive-name package-archive-location) t)))

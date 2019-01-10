@@ -1,4 +1,4 @@
-# Time-stamp: <2019-01-09 15:26:18 PST (mhb)>
+# Time-stamp: <2019-01-09 22:06:36 Pacific Standard Time (Morgan Bauer)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -109,7 +109,7 @@ if a timestamp comment is at the top, update the timestamp
       delete-old-versions t ; Don't ask to delete excess backup versions.
       backup-by-copying t) ; Copy all files, don't rename them.
 ;;;  don't pollute the fs
-(defconst mhb-auto-save-folder (expand-file-name "~/.emacs.d/auto-save/" "where auto-save files and backups will be stored"))
+(defconst mhb-auto-save-folder (expand-file-name "~/.emacs.d/auto-save/") "where auto-save files and backups will be stored")
 (make-directory mhb-auto-save-folder t) ; make the dir if it doesn't exist
 
 (setq backup-directory-alist
@@ -148,7 +148,6 @@ possible replacement in ivy mode, with counsel and swiper
    ;; this is going to need adjustment on windows for ssh and controlmaster
    ;; controlmaster should match ssh/config to reuse those configurations
    (use-package tramp)
-   :config
    (setq tramp-default-method "rsync"
          tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='~/.ssh/master-%%r@%%h:%%p' -o ControlPersist=15m")
    #+end_src
@@ -219,6 +218,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
                (lambda ()
                  (add-hook 'before-save-hook 'rust-enable-format-on-save nil 'make-it-a-local-hook)))
      (add-hook 'rust-mode-hook 'flyspell-prog-mode)
+     ; racer mode is rust autocompletion
      (add-hook 'rust-mode-hook #'racer-mode)
 
      ;;     (with-eval-after-load 'rust-mode
