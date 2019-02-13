@@ -1,4 +1,4 @@
-# Time-stamp: <2019-02-07 21:34:47 PST (mhb)>
+# Time-stamp: <2019-02-13 13:02:27 PST (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -48,12 +48,15 @@ C-M-\ to run indent-region
     (show-paren-mode t) ;highlight matching parens
     (setq x-stretch-cursor t) ;show full character widths
     (tool-bar-mode 0) ; no clickable gui icons, no floppy disks to save
+    (size-indication-mode t) ; where in the file the cursor is
     (column-number-mode t) ; show column number with line number in mode line
     (global-hl-line-mode t)
     (setq-default indent-tabs-mode nil)
 
     ;; otherwise put these two lines back under go-autocomplete below
     (add-hook 'after-init-hook 'global-company-mode)
+    ;; size 17 allows two 120 char side by side on the imac
+    (set-frame-font "IBM Plex Mono 17" t t)
   #+end_src
 
 ** custom keys
