@@ -1,4 +1,4 @@
-# Time-stamp: <2019-02-13 13:02:27 PST (mhb)>
+# Time-stamp: <2019-02-15 15:29:58 PST (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -27,9 +27,6 @@ C-M-\ to run indent-region
   (eval-when-compile
     (require 'use-package))
   (require 'bind-key) ;; for using :bind in use-package declarations
-
-  (use-package magit
-    :ensure t)
 
   (use-package delight
     :ensure t)
@@ -188,6 +185,14 @@ possible replacement in ivy mode, with counsel and swiper
   :ensure t
   :init (global-flycheck-mode))
   #+END_SRC
+** magit
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package magit
+     :ensure t)
+
+   (add-to-list 'magit-commit-arguments "--signoff")
+   #+end_src
 
 ** shell
 
