@@ -1,4 +1,4 @@
-# Time-stamp: <2019-04-01 20:39:26 PDT (mhb)>
+# Time-stamp: <2019-04-03 01:45:04 PDT (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -240,26 +240,22 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
   ;;   (setq company-tooltip-align-annotations t)
    #+end_src
 
-** GO 
+** golang
 #+begin_src shell
 go get -u -v golang.org/x/tools/cmd/goimports
 go get -u -v github.com/nsf/gocode
 go get -u -v github.com/rogpeppe/godef
 go get -u -v golang.org/x/tools/cmd/guru
+go get -u -v github.com/golangci/golangci-lint/cmd/golangci-lint
 
-# metalinter
-brew tap alecthomas/homebrew-tap
-brew install gometalinter
 #+end_src
 
 
 
    #+begin_src emacs-lisp
-;(use-package flycheck-gometalinter
- ; :ensure t
- ; :config
- ; (progn
- ;   (flycheck-gometalinter-setup)))
+(use-package flycheck-golangci-lint
+  :ensure t
+  :hook (go-mode . flycheck-golangci-lint-setup))
 (use-package company
   :ensure t)
 (use-package company-go
@@ -268,14 +264,14 @@ brew install gometalinter
 
        (use-package go-guru
          :ensure t
-         :defer 30)
+         :defer 30
+         :hook (go-mode .
+                 (lambda ()
+                   (add-hook 'before-save-hook 'gofmt-before-save nil 'make-it-a-local-hook)
+                   ;; Godef jump key binding, this matches 'everything-else' apparently
+                   (local-set-key (kbd "C-c C-j") 'go-guru-definition))))
        ; Use goimports instead of go-fmt
        (setq gofmt-command "goimports")
-       (add-hook 'go-mode-hook
-               (lambda ()
-                 (add-hook 'before-save-hook 'gofmt-before-save nil 'make-it-a-local-hook)
-                 ;; Godef jump key binding, this matches 'everything-else' apparently
-                 (local-set-key (kbd "C-c C-j") 'go-guru-definition)))
        ;(add-hook 'go-mode-hook
        ;          (lambda ()
           ;;(set (make-local-variable 'company-backends) '(company-go))
