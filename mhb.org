@@ -1,4 +1,4 @@
-# Time-stamp: <2020-02-04 12:26:47 PST (mhb)>
+# Time-stamp: <2020-05-05 10:35:19 PDT (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -52,8 +52,11 @@ C-M-\ to run indent-region
 
     ;; otherwise put these two lines back under go-autocomplete below
     (add-hook 'after-init-hook 'global-company-mode)
-    ;; size 17 allows two 120 char side by side on the imac
-    (set-frame-font "IBM Plex Mono 17" t t)
+    (if (memq window-system '(mac ns))
+        ;; size 17 allows two 120 char side by side on the imac
+        (setq default-frame-alist '((font . "IBM Plex Mono 17")))
+      ;; size 14 is enough for two 80 side by side at roughly full HD 1080p
+      (setq default-frame-alist '((font . "IBM Plex Mono 14"))))
 
     ;; tab to complete
     (setq tab-always-indent 'complete)
@@ -68,6 +71,7 @@ C-M-\ to run indent-region
     (use-package exec-path-from-shell
       :ensure t)
 
+    ;; mac specific stuff
     (when (memq window-system '(mac ns))
       (setq mac-command-key-is-meta nil
             mac-command-modifier nil
@@ -373,7 +377,6 @@ host
 
   #+RESULTS:
   : ~/sync/org-notes/
-
 
 * prologue - other stuff from initial after-init file
 

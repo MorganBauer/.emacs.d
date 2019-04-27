@@ -1,4 +1,4 @@
-;;;; Time-stamp: <2019-04-03 01:43:52 PDT (mhb)>
+;;;; Time-stamp: <2019-04-27 15:30:25 Pacific Daylight Time (Morgan Bauer)>
 
 ;; set this as early as possible to take effect
 ;; (setq debug-on-error 't)
@@ -69,9 +69,4 @@
 ;; (require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el"))
 ;; (cask-initialize)
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:foreground "#DCDCCC" :background "#3F3F3F")))))
+;;; init.el ends here
