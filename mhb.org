@@ -182,6 +182,12 @@ possible replacement in ivy mode, with counsel and swiper
   #+END_SRC
 * programming languages
 
+   #+begin_src emacs-lisp
+   (use-package rainbow-delimiters
+     :ensure t)
+   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+   #+end_src
+
   #+BEGIN_SRC emacs-lisp
 ;; flycheck for everything
 (use-package flycheck
@@ -196,12 +202,6 @@ possible replacement in ivy mode, with counsel and swiper
    #+end_src
 
 ** shell
-
-   #+begin_src emacs-lisp
-   (use-package rainbow-delimiters
-     :ensure t)
-   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-   #+end_src
 *** bats
    #+begin_src emacs-lisp
    (add-to-list 'auto-mode-alist '("\\.bats\\'" . shell-script-mode))
