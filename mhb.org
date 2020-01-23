@@ -183,6 +183,9 @@ possible replacement in ivy mode, with counsel and swiper
 * programming languages
 
    #+begin_src emacs-lisp
+   (require 'auto-highlight-symbol)
+   (global-auto-highlight-symbol-mode t)
+
    (use-package rainbow-delimiters
      :ensure t)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
