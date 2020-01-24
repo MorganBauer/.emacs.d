@@ -1,4 +1,4 @@
-# Time-stamp: <2020-01-23 17:42:41 PST (mhb)>
+# Time-stamp: <2020-01-23 17:44:53 PST (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -180,6 +180,10 @@ possible replacement in ivy mode, with counsel and swiper
           org-src-tab-acts-natively t)
     (add-to-list 'org-babel-load-languages '(dot . t))
     (setq org-confirm-babel-evaluate nil)
+
+    (use-package ox-hugo
+      :ensure t
+      :after ox)
   #+END_SRC
 * programming languages
 
