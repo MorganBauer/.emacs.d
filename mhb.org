@@ -1,4 +1,4 @@
-# Time-stamp: <2020-01-23 17:44:53 PST (mhb)>
+# Time-stamp: <2020-02-04 12:26:47 PST (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -176,8 +176,9 @@ possible replacement in ivy mode, with counsel and swiper
 
     ;;(use-package org-journal)
 
-    (setq org-src-fontify-natively t
-          org-src-tab-acts-natively t)
+    (setq org-src-fontify-natively t ; make source code look like source code
+          org-src-tab-acts-natively t ; make tab-key work in source code blocks, see fn org-indent-line
+          org-log-done 'time) ; add a closed timestamp, useful for blogging
     (add-to-list 'org-babel-load-languages '(dot . t))
     (setq org-confirm-babel-evaluate nil)
 
