@@ -1,4 +1,4 @@
-# Time-stamp: <2020-05-05 12:18:02 PDT (mhb)>
+# Time-stamp: <2020-05-05 12:26:34 PDT (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -63,6 +63,10 @@ C-M-\ to run indent-region
 
     ;; maximize on startup
     (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+    ;; visual-line mode for long lines
+    (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+    (use-package visual-line-mode :hook org-mode)
   #+end_src
 
 ** custom keys
