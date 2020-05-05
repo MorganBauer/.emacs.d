@@ -60,6 +60,9 @@ C-M-\ to run indent-region
 
     ;; tab to complete
     (setq tab-always-indent 'complete)
+
+    ;; maximize on startup
+    (add-to-list 'initial-frame-alist '(fullscreen . maximized))
   #+end_src
 
 ** custom keys
