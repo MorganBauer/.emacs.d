@@ -383,6 +383,24 @@ host
   #+RESULTS:
   : ~/sync/org-notes/
 
+* dired
+
+  #+begin_src emacs-lisp
+    (use-package dired
+      :hook (dired-mode . dired-hide-details-mode)
+      :config
+      ;; Colourful columns.
+      (use-package diredfl
+        :ensure t
+        :config
+        (diredfl-global-mode 1)))
+
+    (use-package dired-git-info
+        :ensure t
+        :bind (:map dired-mode-map
+                    (")" . dired-git-info-mode)))
+  #+end_src
+
 * prologue - other stuff from initial after-init file
 
 why must this be after everything? I don't think the desktop stuff
