@@ -173,7 +173,8 @@ possible replacement in ivy mode, with counsel and swiper
   works for anything that can be completed.
 
   #+BEGIN_SRC emacs-lisp
-    (require 'org)
+    (use-package org :ensure t)
+
     (require 'ob-tangle)
     (require 'ob-dot)
     (require 'ox-latex)
