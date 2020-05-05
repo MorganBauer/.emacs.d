@@ -1,5 +1,8 @@
 ;;;; Time-stamp: <2019-04-27 15:30:25 Pacific Daylight Time (Morgan Bauer)>
+;;; init.el --- Summary
+;;; Commentary:
 
+;;; Code:
 ;; set this as early as possible to take effect
 ;; (setq debug-on-error 't)
 
