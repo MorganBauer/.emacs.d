@@ -1,4 +1,4 @@
-# Time-stamp: <2020-05-05 10:35:19 PDT (mhb)>
+# Time-stamp: <2020-05-05 12:18:02 PDT (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -255,12 +255,14 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 
 ** golang
 #+begin_src shell
-go get -u -v golang.org/x/tools/cmd/goimports
-go get -u -v github.com/nsf/gocode
-go get -u -v github.com/rogpeppe/godef
-go get -u -v golang.org/x/tools/cmd/guru
-go get -u -v github.com/golangci/golangci-lint/cmd/golangci-lint
-
+  go get -u -v golang.org/x/tools/cmd/goimports
+  go get -u -v github.com/nsf/gocode
+  go get -u -v github.com/rogpeppe/godef
+  # go guru replaces go oracle
+  go get -u -v golang.org/x/tools/cmd/guru
+  # golangci-lint replaces gometalinter
+  # check https://github.com/golangci/golangci-lint for changing install
+  GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.26.0
 #+end_src
 
 
@@ -297,9 +299,9 @@ go get -u -v github.com/golangci/golangci-lint/cmd/golangci-lint
      (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
      ;; (add-hook 'go-mode-hook 'flycheck-mode)
 
-     (unless (package-installed-p 'go-tag)
-       (package-refresh-contents)
-       (package-install 'go-tag))
+     ;; add tags to structs for things like json/protos/etc
+     (use-package go-tag
+       :ensure t)
      (setq go-tag-args (list "-transform" "camelcase"))
    #+end_src
 
