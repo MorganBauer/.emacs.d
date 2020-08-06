@@ -1,17 +1,25 @@
-;;;; Time-stamp: <2020-05-05 12:35:52 PDT (mhb)>
+;;;; Time-stamp: <2020-08-06 15:51:12 PDT (mhb)>
 ;;; init.el --- Summary
 ;;; Commentary:
 
 ;;; Code:
 ;; set this as early as possible to take effect
-;; (setq debug-on-error 't)
+(setq debug-on-error 't)
 
 (setq load-prefer-newer t)
 
 ;; load the real init file after everything else
 ;; investigate  (setq package-enable-at-startup nil)
+(defconst mhb-home-emacs-directory (expand-file-name  "~/.emacs.d/mhb.org") "home directory emacs location")
+(defconst mhb-sync-emacs-directory-unix (expand-file-name "~/sync/org-notes/mhb.org") "synced emacs config on unix systems")
+(defconst mhb-sync-emacs-directory-windows (expand-file-name "appdatalocalroamingwhatever") "synced emacs config on windows systems")
 (add-hook 'after-init-hook
-          (lambda () (org-babel-load-file "~/.emacs.d/mhb.org")))
+          (lambda ()
+            (cond ((file-exists-p mhb-sync-emacs-directory-unix)
+                   (org-babel-load-file mhb-sync-emacs-directory-unix))
+                  ((file-exists-p mhb-sync-emacs-directory-windows)
+                   (org-babel-load-file mhb-sync-emacs-directory-windows))
+                  ((org-babel-load-file mhb-home-emacs-directory)))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
