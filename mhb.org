@@ -1,4 +1,4 @@
-# Time-stamp: <2020-05-05 12:26:34 PDT (mhb)>
+# Time-stamp: <2020-08-06 17:25:48 PDT (mhb)>
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
@@ -229,18 +229,41 @@ possible replacement in ivy mode, with counsel and swiper
    #+begin_src emacs-lisp
    (add-to-list 'auto-mode-alist '("\\.bats\\'" . shell-script-mode))
    #+end_src
-** common lisp
+** lisps
+*** elisp - emacs lisp
 
+This is where I put the information on elisp.
+
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook 'electric-pair-mode)
+#+end_src
+
+*** scheme
+    #+begin_src emacs-lisp
+    (use-package geiser
+      :ensure t
+      :config
+    ;(setq geiser-repl-use-other-window nil)
+    (setq geiser-active-implementations '(guile)
+          geiser-default-implementation 'guile)
+    )
+    (require 'ob-scheme)
+    (add-to-list 'org-babel-load-languages '(scheme . t))
+    #+end_src
+*** common lisp
 Warning (emacs): To restore SLIME in this session, customize ‘lisp-mode-hook’
 and replace ‘sly-editing-mode’ with ‘slime-lisp-mode-hook’.
 Warning (emacs): ‘sly.el’ loaded OK. To use SLY, customize ‘lisp-mode-hook’ and
 replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 
-   #+begin_src emacs-lisp
-   ;(load (expand-file-name "~/quicklisp/slime-helper.el"))
+#+begin_src emacs-lisp
+  ;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
   ;; Replace "sbcl" with the path to your implementation
-  (setq inferior-lisp-program "sbcl")
-   #+end_src
+  (let ((has-sbcl (executable-find "sbcl")))
+    (if has-sbcl
+        (setq inferior-lisp-program "sbcl")))
+#+end_src
+
 ** rust
    #+begin_src emacs-lisp
      (use-package rust-mode
@@ -326,18 +349,6 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
    (add-to-list 'org-babel-load-languages '(gnuplot . t))
    #+end_src
 
-** scheme
-   #+begin_src emacs-lisp
-   (use-package geiser
-     :ensure t
-     :config
-   ;(setq geiser-repl-use-other-window nil)
-   (setq geiser-active-implementations '(guile)
-         geiser-default-implementation 'guile)
-   )
-   (require 'ob-scheme)
-   (add-to-list 'org-babel-load-languages '(scheme . t))
-   #+end_src
 ** javascript
    #+begin_src emacs-lisp
    (setq js-indent-level 2)
