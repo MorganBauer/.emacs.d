@@ -1,4 +1,3 @@
-;;;; Time-stamp: <2020-08-06 15:51:12 PDT (mhb)>
 ;;; init.el --- Summary
 ;;; Commentary:
 

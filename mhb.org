@@ -1,4 +1,4 @@
-# Time-stamp: <2020-08-06 17:25:48 PDT (mhb)>
+
 
 * general notes
 variables are prefixed with my initials to attempt to provide uniqueness
