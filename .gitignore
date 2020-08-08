@@ -12,4 +12,5 @@
 /ido.last
 # not sure what this does, but is probably machine specific
 /ac-comphist.dat
-
+# don't need compiled elisp, do it on each machine
+*.elc
