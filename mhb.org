@@ -212,6 +212,18 @@ possible replacement in ivy mode, with counsel and swiper
    (use-package rainbow-delimiters
      :ensure t)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+   ;; many languages are supporting 'language server protocol'
+   (use-package lsp-mode
+     :ensure t
+     :commands (lsp lsp-deferred)
+     ;; go-mode lsp not ready for prime time
+     ;; :hook (go-mode . lsp-deferred)
+     )
+
+   ;; Optional - provides fancier overlays.
+   (use-package lsp-ui
+     :ensure t
+     :commands lsp-ui-mode)
    #+end_src
 
   #+BEGIN_SRC emacs-lisp
