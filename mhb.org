@@ -181,6 +181,8 @@ possible replacement in ivy mode, with counsel and swiper
 
   works for anything that can be completed.
 
+  You can run the command ‘org-babel-mark-block’ with C-c C-v C-M-h
+
   #+BEGIN_SRC emacs-lisp
     (use-package org :ensure t)
 
@@ -357,6 +359,18 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
     (use-package plantuml-mode
       :ensure t)
   #+END_SRC
+** latex
+  #+BEGIN_SRC emacs-lisp
+    ;; auctex is loaded as tex
+    (use-package tex
+       :ensure auctex)
+    (setq TeX-auto-save t
+          TeX-parse-self t)
+    ;;(use-package ox-moderncv
+    ;;    :load-path "path_to_repository/org-cv/"
+    ;;    :init (require 'ox-moderncv))
+  #+END_SRC
+
 * bbdb 
   #+begin_src emacs-lisp
 (use-package bbdb
