@@ -385,10 +385,10 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 
 * bbdb 
   #+begin_src emacs-lisp
-(use-package bbdb
+  ;; (use-package bbdb
   ;; :ensure t
   ;;  :init (bbdb-initialize)
-)
+  ;; )
   #+end_src
 
 * erc
