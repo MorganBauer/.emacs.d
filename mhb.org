@@ -269,9 +269,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
      (use-package rust-mode
        :ensure t)
 
-     (add-hook 'rust-mode-hook
-               (lambda ()
-                 (add-hook 'before-save-hook 'rust-enable-format-on-save nil 'make-it-a-local-hook)))
+     (setq rust-format-on-save t)
      (add-hook 'rust-mode-hook 'flyspell-prog-mode)
      ; racer mode is rust autocompletion
      (add-hook 'rust-mode-hook #'racer-mode)
