@@ -1,2 +1,15 @@
+# don't need to save the file renedered by org from mhb.org
 /mhb.el
+# don't need to ship the files around, I can grab them from package source on the internet
 /elpa/
+# I connect to different machines from different machines
+/tramp
+# I run different commands on different machines
+/eshell/
+# I access different files on different machines
+/auto-save-list/
+/auto-save/
+/ido.last
+# not sure what this does, but is probably machine specific
+/ac-comphist.dat
+
