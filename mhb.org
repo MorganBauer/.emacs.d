@@ -203,7 +203,8 @@ possible replacement in ivy mode, with counsel and swiper
 * programming languages
 
    #+begin_src emacs-lisp
-   (require 'auto-highlight-symbol)
+   (use-package auto-highlight-symbol
+     :ensure t)
    (global-auto-highlight-symbol-mode t)
 
    (use-package rainbow-delimiters
