@@ -426,6 +426,14 @@ host
 
 * prologue - other stuff from initial after-init file
 
+** extra functionality
+
+#+begin_src emacs-lisp
+  (use-package uuidgen
+      :ensure t)
+#+end_src
+
+** desktop configuration
 why must this be after everything? I don't think the desktop stuff
 works anyway.
 
