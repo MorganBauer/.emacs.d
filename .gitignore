@@ -14,3 +14,4 @@
 /ac-comphist.dat
 # don't need compiled elisp, do it on each machine
 *.elc
+/.stversions/
