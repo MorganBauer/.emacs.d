@@ -226,6 +226,37 @@ possible replacement in ivy mode, with counsel and swiper
      :commands lsp-ui-mode)
    #+end_src
 
+Language Server Protocol
+
+lsp-mode is more global than any specific language
+
+copied from https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
+#+begin_src emacs-lisp
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (go-mode . lsp-deferred))
+
+;; Optional - provides fancier overlays.
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
+;; Company mode is a standard completion package that works well with lsp-mode.
+(use-package company
+  :ensure t
+  :config
+  ;; Optionally enable completion-as-you-type behavior.
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 1))
+
+;; Optional - provides snippet support.
+(use-package yasnippet
+  :ensure t
+  :commands yas-minor-mode
+  :hook (go-mode . yas-minor-mode))
+#+end_src
+
   #+BEGIN_SRC emacs-lisp
 ;; flycheck for everything
 (use-package flycheck
@@ -308,48 +339,54 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
   go get -u -v golang.org/x/tools/cmd/guru
   # golangci-lint replaces gometalinter
   # check https://github.com/golangci/golangci-lint for changing install
-  GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.26.0
+  GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.30.0
 #+end_src
 
 
 
-   #+begin_src emacs-lisp
-(use-package flycheck-golangci-lint
-  :ensure t
-  :hook (go-mode . flycheck-golangci-lint-setup))
-(use-package company
-  :ensure t)
-(use-package company-go
-  :ensure t)
-;(company-quickhelp-mode)
+#+begin_src emacs-lisp
+  (use-package flycheck-golangci-lint
+    :ensure t
+    :hook (go-mode . flycheck-golangci-lint-setup))
+  (use-package company
+    :ensure t)
+    (use-package company-go
+      :ensure t)
+    ;(company-quickhelp-mode)
 
-       (use-package go-guru
-         :ensure t
-         :defer 30
-         :hook (go-mode .
-                 (lambda ()
-                   (add-hook 'before-save-hook 'gofmt-before-save nil 'make-it-a-local-hook)
-                   ;; Godef jump key binding, this matches 'everything-else' apparently
-                   (local-set-key (kbd "C-c C-j") 'go-guru-definition))))
-       ; Use goimports instead of go-fmt
-       (setq gofmt-command "goimports")
-       ;(add-hook 'go-mode-hook
-       ;          (lambda ()
-          ;;(set (make-local-variable 'company-backends) '(company-go))
-            ;;(company-mode)))
-     (add-hook 'go-mode-hook 'flyspell-prog-mode)
-     ;; company mode instead of autocomplete
-     ;;(require 'go-autocomplete)
+           ;; (use-package go-guru
+           ;;   :ensure t
+           ;;   :defer 30
+           ;;   :hook (go-mode .
+           ;;           (lambda ()
+           ;;             (add-hook 'before-save-hook 'gofmt-before-save nil 'make-it-a-local-hook)
+           ;;             ;; Godef jump key binding, this matches 'everything-else' apparently
+           ;;          (local-set-key (kbd "C-c C-j") 'go-guru-definition))))
+           ; Use goimports instead of go-fmt
+           ;(setq gofmt-command "goimports")
+           ;(add-hook 'go-mode-hook
+           ;          (lambda ()
+              ;;(set (make-local-variable 'company-backends) '(company-go))
+                ;;(company-mode)))
+         (add-hook 'go-mode-hook 'flyspell-prog-mode)
+         ;; company mode instead of autocomplete
+         ;;(require 'go-autocomplete)
 
 
-     (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
-     ;; (add-hook 'go-mode-hook 'flycheck-mode)
+         (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
+         ;; (add-hook 'go-mode-hook 'flycheck-mode)
 
-     ;; add tags to structs for things like json/protos/etc
-     (use-package go-tag
-       :ensure t)
-     (setq go-tag-args (list "-transform" "camelcase"))
-   #+end_src
+         ;; add tags to structs for things like json/protos/etc
+         (use-package go-tag
+           :ensure t)
+         (setq go-tag-args (list "-transform" "camelcase"))
+
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+#+end_src
 
 ** R programming statistical language config of ess
    #+begin_src emacs-lisp
