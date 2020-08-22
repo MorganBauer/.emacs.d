@@ -52,11 +52,19 @@ C-M-\ to run indent-region
 
     ;; otherwise put these two lines back under go-autocomplete below
     (add-hook 'after-init-hook 'global-company-mode)
+    ;; Font settings
+    ;; Test char and monospace:
+    ;; 0123456789abcdefghijklmnopqrstuvwxyz [] () :;,. !@#$^&*
+    ;; 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ {} <> "'`  ~-_/|\?
+    ;;
+    ;; should I be pushing onto the front of face-font-family-alternatives?
+    ;;
+    (when (find-font (font-spec :name "IBM Plex Mono"))
     (if (memq window-system '(mac ns))
         ;; size 17 allows two 120 char side by side on the imac
         (setq default-frame-alist '((font . "IBM Plex Mono 17")))
       ;; size 14 is enough for two 80 side by side at roughly full HD 1080p
-      (setq default-frame-alist '((font . "IBM Plex Mono 14"))))
+      (setq default-frame-alist '((font . "IBM Plex Mono 14")))))
 
     ;; tab to complete
     (setq tab-always-indent 'complete)
