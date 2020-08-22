@@ -39,8 +39,8 @@ C-M-\ to run indent-region
     (setq scroll-conservatively 3)
 
     (use-package zenburn-theme
-      :ensure t)
-
+      :ensure
+      :config (enable-theme 'zenburn))
     ;; misc interface stuff
     (show-paren-mode t) ;highlight matching parens
     (setq x-stretch-cursor t) ;show full character widths
