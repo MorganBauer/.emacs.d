@@ -17,6 +17,13 @@ what is abbrev tables? abbrev_defs file?
 C-x h to highlight/select/mark the whole buffer
 C-M-\ to run indent-region
 
+** recentering and cursor movement - also see scrolling
+M-r to move cursor around on screen, middle, top, bottom.
+I don't find this terribly useful.
+
+C-l recenters the current line, top, bottom, middle.
+This is nice for aligning buffers to visually diff them.
+
 * packages beyond the default 
   #+begin_src emacs-lisp
   ;; Bootstrap `use-package'
