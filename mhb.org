@@ -43,7 +43,8 @@ This is nice for aligning buffers to visually diff them.
 (use-package pinentry
    :ensure t
    :config
-   (pinentry-start))
+   (unless (memq window-system '(w32))
+     (pinentry-start)))
 #+END_SRC
 
 * interface stuff
