@@ -1,7 +1,18 @@
 
 
 * general notes
-variables are prefixed with my initials to attempt to provide uniqueness
+variables are prefixed with my initials, mhb, to attempt to provide uniqueness
+
+** separate out custom usage
+
+This usually ends up appended to init.el even when I don't change anything.
+So let's put it in a separate file, and stop clobbering init.el with nonsense.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+#+END_SRC
 
 * template for adding code
   #+begin_src emacs-lisp
