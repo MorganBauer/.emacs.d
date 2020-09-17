@@ -436,6 +436,10 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 (use-package yaml-mode
    :ensure t)
 #+END_SRC
+
+** python
+ropemacs, pymacs
+
 * bbdb 
   #+begin_src emacs-lisp
   ;; (use-package bbdb
