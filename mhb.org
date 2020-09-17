@@ -371,7 +371,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
   go get -u -v golang.org/x/tools/cmd/guru
   # golangci-lint replaces gometalinter
   # check https://github.com/golangci/golangci-lint for changing install
-  GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.30.0
+  GO111MODULE=on go get golang.org/x/tools/gopls@latest
 #+end_src
 
 
@@ -384,29 +384,8 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
     :ensure t)
     (use-package company-go
       :ensure t)
-    ;(company-quickhelp-mode)
-
-           ;; (use-package go-guru
-           ;;   :ensure t
-           ;;   :defer 30
-           ;;   :hook (go-mode .
-           ;;           (lambda ()
-           ;;             (add-hook 'before-save-hook 'gofmt-before-save nil 'make-it-a-local-hook)
-           ;;             ;; Godef jump key binding, this matches 'everything-else' apparently
-           ;;          (local-set-key (kbd "C-c C-j") 'go-guru-definition))))
-           ; Use goimports instead of go-fmt
-           ;(setq gofmt-command "goimports")
-           ;(add-hook 'go-mode-hook
-           ;          (lambda ()
-              ;;(set (make-local-variable 'company-backends) '(company-go))
-                ;;(company-mode)))
+  ;; (use-package company-quickhelp :ensure t :config (company-quickhelp-mode))
          (add-hook 'go-mode-hook 'flyspell-prog-mode)
-         ;; company mode instead of autocomplete
-         ;;(require 'go-autocomplete)
-
-
-         (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
-         ;; (add-hook 'go-mode-hook 'flycheck-mode)
 
          ;; add tags to structs for things like json/protos/etc
          (use-package go-tag
