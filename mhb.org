@@ -49,7 +49,7 @@ C-l recenters the current line, top, bottom, middle.
 This is nice for aligning buffers to visually diff them.
 
 * packages beyond the default 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 ;; be super explicit about what package archives we want
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/") ;; https instead of default http
                          ("org" . "https://orgmode.org/elpa/")
@@ -57,22 +57,21 @@ This is nice for aligning buffers to visually diff them.
                          ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
-    ;; Bootstrap `use-package'
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package))
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 (require 'use-package)
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key) ;; for using :bind in use-package declarations
 
+(use-package delight
+  :ensure t)
+#+end_src
 
-    (eval-when-compile
-      (require 'use-package))
-    (require 'bind-key) ;; for using :bind in use-package declarations
-
-    (use-package delight
-      :ensure t)
-  #+end_src
-
+* gpg/pgp
 #+BEGIN_SRC emacs-lisp
 (use-package pinentry
    :ensure t
