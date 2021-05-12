@@ -56,8 +56,6 @@ This is nice for aligning buffers to visually diff them.
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 
-(require 'package)
-(setq package-enable-at-startup nil)
 (package-initialize)
     ;; Bootstrap `use-package'
     (unless (package-installed-p 'use-package)
