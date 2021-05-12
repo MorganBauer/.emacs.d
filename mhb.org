@@ -466,6 +466,16 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 ** python
 ropemacs, pymacs
 
+** containers
+
+*** docker
+
+*** kubernetes
+#+begin_src emacs-lisp
+(use-package k8s-mode
+  :ensure t
+  :hook (k8s-mode . yas-minor-mode))
+#+end_src
 * bbdb 
   #+begin_src emacs-lisp
   ;; (use-package bbdb
