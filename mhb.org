@@ -170,6 +170,7 @@ possible replacement in ivy mode, with counsel and swiper
 
 ** vterm
 #+begin_src emacs-lisp
+(setq vterm-always-compile-module t)
 (unless (memq window-system '(w32)) ; vterm not compatible with windows
   (use-package vterm
     :ensure t))
