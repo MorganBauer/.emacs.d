@@ -168,6 +168,13 @@ possible replacement in ivy mode, with counsel and swiper
   :ensure t)
 #+END_SRC
 
+** vterm
+#+begin_src emacs-lisp
+(unless (memq window-system '(w32)) ; vterm not compatible with windows
+  (use-package vterm
+    :ensure t))
+#+end_src
+
 * environmental setup
   #+begin_src emacs-lisp
     (use-package exec-path-from-shell
