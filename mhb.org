@@ -272,21 +272,14 @@ if a timestamp comment is at the top, update the timestamp
    (use-package rainbow-delimiters
      :ensure t)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-   ;; many languages are supporting 'language server protocol'
-   (use-package lsp-mode
-     :ensure t
-     :commands (lsp lsp-deferred)
-     ;; go-mode lsp not ready for prime time
-     ;; :hook (go-mode . lsp-deferred)
-     )
 
    ;; Optional - provides fancier overlays.
    (use-package lsp-ui
      :ensure t
      :commands lsp-ui-mode)
    #+end_src
-
-Language Server Protocol
+** Language Server Protocol
+Many languages are supporting 'language server protocol'
 
 lsp-mode is more global than any specific language
 
@@ -300,7 +293,8 @@ copied from https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
 ;; Optional - provides fancier overlays.
 (use-package lsp-ui
   :ensure t
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :init)
 
 ;; Company mode is a standard completion package that works well with lsp-mode.
 (use-package company
@@ -423,6 +417,21 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
+
+
+(setq lsp-gopls-staticcheck t)
+(setq lsp-eldoc-render-all t)
+(setq lsp-gopls-complete-unimported t)
+
+
+(setq lsp-ui-doc-enable nil
+      lsp-ui-peek-enable t
+      lsp-ui-sideline-enable t
+      lsp-ui-imenu-enable t
+      lsp-ui-flycheck-enable t)
+
+
+(define-key go-mode-map [remap godef-jump] 'lsp-find-definition)
 #+end_src
 
 ** R programming statistical language config of ess
