@@ -266,6 +266,8 @@ if a timestamp comment is at the top, update the timestamp
 
     (setq org-src-fontify-natively t ; make source code look like source code
           org-src-tab-acts-natively t ; make tab-key work in source code blocks, see fn org-indent-line
+          org-src-preserve-indentation nil ;; default, use minimum number of leading spaces
+          org-edit-src-content-indentation 0 ;; the minimum number of leading spaces to use.
           org-adapt-indentation nil ; don't hard indent content
           org-log-done 'time) ; add a closed timestamp, useful for blogging
     (add-to-list 'org-babel-load-languages '(dot . t))
