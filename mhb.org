@@ -215,7 +215,7 @@ if a timestamp comment is at the top, update the timestamp
  (format-time-string FORMAT-STRING &optional TIME UNIVERSAL)
 
 ** auto-save 
-   #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (setq vc-make-backup-files t)
 (setq version-control t ; Use version numbers for backups.
       kept-new-versions 10 ; Number of newest versions to keep.
@@ -230,7 +230,9 @@ if a timestamp comment is at the top, update the timestamp
   (list (cons "." mhb-auto-save-folder)))
 (setq auto-save-file-name-transforms
   (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" (concat mhb-auto-save-folder "\\2"))))
-   #+end_src
+
+(auto-save-visited-mode)
+#+end_src
 
 ** tramp
    #+begin_src emacs-lisp
