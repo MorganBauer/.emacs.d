@@ -96,10 +96,6 @@ This is nice for aligning buffers to visually diff them.
     (global-hl-line-mode t)
     (setq-default indent-tabs-mode nil)
 
-    (use-package company
-      :ensure t
-      :init (add-hook 'after-init-hook 'global-company-mode))
-
     ;; Font settings
     ;; Test char and monospace:
     ;; 0123456789abcdefghijklmnopqrstuvwxyz [] () :;,. !@#$^&*
