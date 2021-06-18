@@ -1,4 +1,4 @@
-
+#+TITLE: emacs configuration file
 
 * general notes
 variables are prefixed with my initials, mhb, to attempt to provide uniqueness
