@@ -109,7 +109,9 @@ This is nice for aligning buffers to visually diff them.
         (setq default-frame-alist '((font . "IBM Plex Mono 17")))
       ;; size 14 is enough for two 80 side by side at roughly full HD 1080p
       (setq default-frame-alist '((font . "IBM Plex Mono 14")))))
-
+    ;; load a backup font on windows to enable emoji
+    (if (memq window-system '(w32))
+      (set-fontset-font t nil "Segoe UI Emoji" nil 'append))
     ;; tab to complete
     (setq tab-always-indent 'complete)
 
