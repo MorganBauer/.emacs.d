@@ -30,6 +30,14 @@ So let's put it in a separate file, and stop clobbering init.el with nonsense.
                      gcs-done)))
 #+end_src
 
+* debug file loading
+debug what is loading the deprecated 'cl package
+(require 'loadhist)
+(file-dependents (feature-file 'cl))
+
+set this as early as possible to take effect
+(setq debug-on-error 't)
+
 * future work
 
 what is abbrev tables? abbrev_defs file?
