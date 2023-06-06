@@ -6,5 +6,7 @@
 /ac-comphist.dat
 /ido.last
 /mhb.el
+/eln-cache
+(?d)*.eln
 (?d)*.elc
 !mhb.org
