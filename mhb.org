@@ -274,13 +274,14 @@ if a timestamp comment is at the top, update the timestamp
          tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='~/.ssh/master-%%r@%%h:%%p' -o ControlPersist=15m")
    #+end_src
 * flyspell
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (use-package flyspell
   :ensure t)
 (add-hook 'text-mode-hook 'flyspell-mode)
 (setq flyspell-issue-message-flag nil)
 (global-set-key (kbd "<f8>") 'flyspell-buffer)
-  #+end_src
+;; windows configuration for spell check program
+#+end_src
 * org mode
   interesting thing, is to use 'easy templates'
   to insert a source block, type "<s" and then hit tab.
