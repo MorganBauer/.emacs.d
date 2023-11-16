@@ -645,6 +645,15 @@ host
                     (")" . dired-git-info-mode)))
   #+end_src
 
+* load some buffers by default
+
+#+begin_src emacs-lisp
+(setq initial-buffer-choice "~/sync/org-notes/todo.org")
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (goto-char (point-max))))
+#+end_src
+
 * prologue - other stuff from initial after-init file
 
 ** extra functionality
