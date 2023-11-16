@@ -6,10 +6,16 @@
 ;; (setq debug-on-error 't)
 
 ;; be super explicit about what package archives we want
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/") ;; https instead of default http
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/") ;; because of course non-gnu stuff has to be separated
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/") ;; https instead of default http
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/") ;; because of course non-gnu stuff has to be separated
+	("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("melpa" . "https://melpa.org/packages/"))
+      package-archive-priorities ;; otherwise everything has the same 0 priority
+      '(("gnu" . 5)
+        ("nongnu" . 4)
+        ("melpa-stable" . 3)
+        ("melpa". 2)))
 
 (package-initialize)
 ;; Bootstrap `use-package'
