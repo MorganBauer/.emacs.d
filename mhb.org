@@ -202,11 +202,11 @@ possible replacement in ivy mode, with counsel and swiper
 #+END_SRC
 
 ** vterm
+Not really remembering to use vterm.
 #+begin_src emacs-lisp
-(setq vterm-always-compile-module t)
-(unless (memq window-system '(w32)) ; vterm not compatible with windows
-  (use-package vterm
-    :ensure t))
+;; vterm not compatible with windows
+;; but my global emacs syncing means it may get installed
+;; paradoxically, always compiling silences any errors that I encounter on windows
 #+end_src
 
 * environmental setup
