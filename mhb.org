@@ -3,6 +3,13 @@
 * general notes
 variables are prefixed with my initials, mhb, to attempt to provide uniqueness
 
+**  Open the loaded config file, wherever it is
+#+BEGIN_SRC emacs-lisp
+(defun mhb-find-file-config ()
+  (interactive)
+  (find-file user-init-file))
+#+END_SRC
+
 ** separate out custom usage
 
 This usually ends up appended to init.el even when I don't change anything.
