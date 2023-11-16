@@ -5,6 +5,32 @@
 ;; set this as early as possible to take effect
 ;; (setq debug-on-error 't)
 
+;; be super explicit about what package archives we want
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/") ;; https instead of default http
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/") ;; because of course non-gnu stuff has to be separated
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
+
+(package-initialize)
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key) ;; for using :bind in use-package declarations
+
+;; Install packages automatically.
+(setq use-package-always-ensure t)
+
+;; Load everything if running as a daemon.
+(if (daemonp)
+    (setq use-package-always-demand t))
+
+;; not sure if I use this, but is used to rename modes in the modeline
+(use-package delight
+  :ensure t)
 
 ;; load the real init file after everything else
 ;; TODO: investigate  (setq package-enable-at-startup nil)
