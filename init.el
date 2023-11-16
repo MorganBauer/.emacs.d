@@ -12,15 +12,9 @@
 
 ;; load the real init file after everything else
 ;; TODO: investigate  (setq package-enable-at-startup nil)
-(defconst mhb-home-emacs-directory (expand-file-name  "~/.emacs.d/mhb.org") "Home directory Emacs location.")
-(defconst mhb-sync-emacs-directory-unix (expand-file-name "~/sync/org-notes/mhb.org") "Synced Emacs config on unix systems.")
-(defconst mhb-sync-emacs-directory-windows (expand-file-name "appdatalocalroamingwhatever") "Synced Emacs config on windows systems.")
+(defconst mhb-home-emacs-directory (expand-file-name  "mhb.org" user-emacs-directory) "Home directory Emacs location.")
 
-(cond ((file-exists-p mhb-sync-emacs-directory-unix)
-       (org-babel-load-file mhb-sync-emacs-directory-unix))
-      ((file-exists-p mhb-sync-emacs-directory-windows)
-       (org-babel-load-file mhb-sync-emacs-directory-windows))
-      ((org-babel-load-file mhb-home-emacs-directory)))
+(org-babel-load-file mhb-home-emacs-directory 'compile)
 
 ;; We should be started up and all of personal configuration is loaded.
 
