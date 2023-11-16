@@ -551,6 +551,10 @@ ropemacs, pymacs
 ** containers
 
 *** docker
+#+begin_src emacs-lisp
+(use-package dockerfile-mode
+  :hook (k8s-mode . yas-minor-mode))
+#+end_src
 
 *** kubernetes
 #+begin_src emacs-lisp
