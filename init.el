@@ -5,10 +5,6 @@
 ;; set this as early as possible to take effect
 ;; (setq debug-on-error 't)
 
-;; something involving performance on startup. approximately 500megs
-(setq gc-cons-threshold (* 500 1000 1000))
-;;
-(setq load-prefer-newer t)
 
 ;; load the real init file after everything else
 ;; TODO: investigate  (setq package-enable-at-startup nil)
