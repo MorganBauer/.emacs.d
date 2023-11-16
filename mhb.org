@@ -211,18 +211,12 @@ possible replacement in ivy mode, with counsel and swiper
 
 * environmental setup
   #+begin_src emacs-lisp
-    (use-package exec-path-from-shell
-      :ensure t)
-   (unless (memq window-system '(w32))
-     (exec-path-from-shell-initialize))
-
-    ;; mac specific stuff
+    ;; mac specific stuff ;; mac and ns are the same, in reference to the NextStep that became osx/macos. See also, GnuStep
     (when (memq window-system '(mac ns))
       (setq mac-command-key-is-meta nil
             mac-command-modifier nil
             mac-option-key-is-meta t
             mac-option-modifier 'meta)
-      (exec-path-from-shell-copy-env "GOPATH")
       ;; this relies on having installed gnu coreutils, because normal ls
       ;; doesn't support emacs features
       (let ((has-gnu-ls (executable-find "gls")))
