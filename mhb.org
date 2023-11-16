@@ -291,7 +291,8 @@ if a timestamp comment is at the top, update the timestamp
   You can run the command ‘org-babel-mark-block’ with C-c C-v C-M-h
 
   #+BEGIN_SRC emacs-lisp
-    (use-package org :ensure t)
+    (use-package org)
+    (use-package org-contrib)
 
     (require 'ob-tangle)
     (require 'ob-dot)
@@ -304,7 +305,14 @@ if a timestamp comment is at the top, update the timestamp
           org-src-preserve-indentation nil ;; default, use minimum number of leading spaces
           org-edit-src-content-indentation 0 ;; the minimum number of leading spaces to use.
           org-adapt-indentation nil ; don't hard indent content
-          org-log-done 'time) ; add a closed timestamp, useful for blogging
+          org-log-done 'time  ; add a closed timestamp, useful for blogging
+          org-todo-keywords '((sequence "TODO(!/!)" "|" "DONE(!/!)"))
+          org-agenda-files '("~/sync/org-notes")
+          org-agenda-include-diary t
+          org-directory "~/sync/org-notes"
+          org-default-notes-file (concat org-directory "/notes.org")
+          org-clock-sound t ; actually alert me when something happens
+          )
     (add-to-list 'org-babel-load-languages '(dot . t))
     (setq org-confirm-babel-evaluate nil)
 
