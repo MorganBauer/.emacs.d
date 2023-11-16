@@ -87,78 +87,78 @@ This is nice for aligning buffers to visually diff them.
 
 * interface stuff
 Configure look and feel.
-  #+begin_src emacs-lisp
-    (setq scroll-conservatively 3)
+#+begin_src emacs-lisp
+(setq scroll-conservatively 3)
 
-    (use-package zenburn-theme
-      :ensure
-      :config (enable-theme 'zenburn))
-    ;; alternate themes, with enhanced visual accessibility
-    (use-package modus-themes)
+(use-package zenburn-theme
+  :ensure
+  :config (enable-theme 'zenburn))
+;; alternate themes, with enhanced visual accessibility
+(use-package modus-themes)
 
-    ;; misc interface stuff
-    (show-paren-mode t) ;highlight matching parens
-    (setq x-stretch-cursor t) ;show full character widths
-    (tool-bar-mode 0) ; no clickable gui icons, no floppy disks to save
-    (size-indication-mode t) ; where in the file the cursor is
-    (column-number-mode t) ; show column number with line number in mode line
-    ;; setup line numbers
-    (progn ;; from emacs wiki https://www.emacswiki.org/emacs/LineNumbers <2023-09-04 Mon>
-      (when (version<= "26.0.50" emacs-version ) ; enable efficient line numbering in ways that supported
-        (global-display-line-numbers-mode))
-      (require 'display-line-numbers)
+;; misc interface stuff
+(show-paren-mode t) ;highlight matching parens
+(setq x-stretch-cursor t) ;show full character widths
+(tool-bar-mode 0) ; no clickable gui icons, no floppy disks to save
+(size-indication-mode t) ; where in the file the cursor is
+(column-number-mode t) ; show column number with line number in mode line
+;; setup line numbers
+(progn ;; from emacs wiki https://www.emacswiki.org/emacs/LineNumbers <2023-09-04 Mon>
+  (when (version<= "26.0.50" emacs-version ) ; enable efficient line numbering in ways that supported
+    (global-display-line-numbers-mode))
+  (require 'display-line-numbers)
 
-      (defcustom display-line-numbers-exempt-modes
-        '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode deft-mode)
-        "Major modes on which to disable line numbers."
-        :group 'display-line-numbers
-        :type 'list
-        :version "green")
+  (defcustom display-line-numbers-exempt-modes
+    '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode deft-mode)
+    "Major modes on which to disable line numbers."
+    :group 'display-line-numbers
+    :type 'list
+    :version "green")
 
-      (defun display-line-numbers--turn-on ()
-        "Turn on line numbers except for certain major modes.
+  (defun display-line-numbers--turn-on ()
+    "Turn on line numbers except for certain major modes.
     Exempt major modes are defined in `display-line-numbers-exempt-modes'."
-        (unless (or (minibufferp)
-                    (member major-mode display-line-numbers-exempt-modes))
-          (display-line-numbers-mode)))
-      (global-display-line-numbers-mode))  ;; end linumbering from emacs wiki
+    (unless (or (minibufferp)
+                (member major-mode display-line-numbers-exempt-modes))
+      (display-line-numbers-mode)))
+  (global-display-line-numbers-mode))  ;; end linumbering from emacs wiki
 
-    (global-hl-line-mode t)
-    (setq-default indent-tabs-mode nil)
+(global-hl-line-mode t)
+(setq-default indent-tabs-mode nil)
 
-    ;; Font settings
-    ;; Test char and monospace:
-    ;; 0123456789abcdefghijklmnopqrstuvwxyz [] () :;,. !@#$^&*
-    ;; 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ {} <> "'`  ~-_/|\?
-    ;;
-    ;; should I be pushing onto the front of face-font-family-alternatives?
-    ;;
-    (when (find-font (font-spec :name "IBM Plex Mono"))
-    (if (memq window-system '(mac ns))
-        ;; size 17 allows two 120 char side by side on the imac
-        (setq default-frame-alist '((font . "IBM Plex Mono 12")))
-      ;; size 14 is enough for two 80 side by side at roughly full HD 1080p
-      (setq default-frame-alist '((font . "IBM Plex Mono 14")))))
-    ;; load a backup font on windows to enable emoji
-    (if (memq window-system '(w32))
-      (set-fontset-font t nil "Segoe UI Emoji" nil 'append))
-    ;; tab to complete
-    (setq tab-always-indent 'complete)
+;; Font settings
+;; Test char and monospace:
+;; 0123456789abcdefghijklmnopqrstuvwxyz [] () :;,. !@#$^&*
+;; 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ {} <> "'`  ~-_/|\?
+;;
+;; should I be pushing onto the front of face-font-family-alternatives?
+;;
+(when (find-font (font-spec :name "IBM Plex Mono"))
+  (if (memq window-system '(mac ns))
+      ;; size 17 allows two 120 char side by side on the imac
+      (setq default-frame-alist '((font . "IBM Plex Mono 12")))
+    ;; size 14 is enough for two 80 side by side at roughly full HD 1080p
+    (setq default-frame-alist '((font . "IBM Plex Mono 14")))))
+;; load a backup font on windows to enable emoji
+(if (memq window-system '(w32))
+    (set-fontset-font t nil "Segoe UI Emoji" nil 'append))
+;; tab to complete
+(setq tab-always-indent 'complete)
 
-    ;; maximize on startup
-    (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;; maximize on startup
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-    ;; visual-line mode for long lines
-    (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-    (use-package visual-line-mode :hook org-mode
-      :ensure nil
-)
+;; visual-line mode for long lines
+(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+(use-package visual-line-mode
+  :ensure nil ; do not load built-ins
+  :hook org-mode)
 
-    ;; maybe more understandable undo
-    (use-package undo-tree)
+;; maybe more understandable undo
+(use-package undo-tree)
 
-    ;; help discoverability with quick-help and which-key
-  #+end_src
+;; help discoverability with quick-help and which-key
+#+end_src
 
 ** ido
 
