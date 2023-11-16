@@ -331,6 +331,12 @@ if a timestamp comment is at the top, update the timestamp
      :ensure t)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
    #+end_src
+** tree-sitter ???
+Tree sitter has to be compiled, and a model loaded for each specific
+language. In addition, the modes are separate from the normally
+available language based modes. For example, go-mode and the
+corresponding tree-sitter mode go-ts-mode.
+
 ** Language Server Protocol
 Many languages are supporting 'language server protocol'
 
