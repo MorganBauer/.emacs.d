@@ -531,6 +531,18 @@ ropemacs, pymacs
   :ensure t
   :hook (k8s-mode . yas-minor-mode))
 #+end_src
+
+** markdown
+Markdown used in many open source projects. Pre-req for some other packages.
+
+#+begin_src emacs-lisp
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode)))
+#+end_src
+
 * bbdb 
   #+begin_src emacs-lisp
   ;; (use-package bbdb
