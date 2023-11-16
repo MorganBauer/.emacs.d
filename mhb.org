@@ -91,7 +91,6 @@ Configure look and feel.
 (setq scroll-conservatively 3)
 
 (use-package zenburn-theme
-  :ensure
   :config (enable-theme 'zenburn))
 ;; alternate themes, with enhanced visual accessibility
 (use-package modus-themes)
@@ -381,7 +380,6 @@ M-. runs the command xref-find-definitions (found in global-map)
 
 ;; Company mode is a standard completion package that works well with lsp-mode.
 (use-package company
-  :ensure t
   :config
   ;; Optionally enable completion-as-you-type behavior.
   (setq company-idle-delay 0)
@@ -397,7 +395,6 @@ M-. runs the command xref-find-definitions (found in global-map)
   #+BEGIN_SRC emacs-lisp
 ;; flycheck for everything
 (use-package flycheck
-  :ensure t
   :init (global-flycheck-mode))
   #+END_SRC
 ** magit
@@ -498,7 +495,6 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
          (use-package go-tag
            :ensure t)
          (setq go-tag-args (list "-transform" "camelcase"))
-
 
 (define-key go-mode-map [remap godef-jump] 'xref-find-definitions)
 
@@ -620,7 +616,6 @@ host
   (setq deft-default-extension "org")
   (setq deft-extensions '("org" "txt" "text" "md" "markdown"))
 
-  (setq deft-text-mode 'org-mode)
   (setq deft-directory "~/sync/org-notes/")
   #+end_src
 
