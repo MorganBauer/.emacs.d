@@ -515,6 +515,12 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 ** python
 ropemacs, pymacs
 
+#+begin_src emacs-lisp
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode-enable-dwim))
+#+end_src
 ** containers
 
 *** docker
