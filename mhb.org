@@ -347,6 +347,23 @@ Since lsp is reading from a seperate process, and that process usually generates
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 #+end_src
 
+** finding in projects
+Generically, start using and getting used to xref.
+
+Think of the left and right angle brackets as go back and go to definition, respecitvely.
+
+The literal chords are:
+Alt + ,
+Alt + .
+
+If you shift ',' you get '<'. And '.' shifted is '>'.
+
+
+M-. runs the command xref-find-definitions (found in global-map)
+
+#+begin_src emacs-lisp
+(setq xref-search-program 'ripgrep)
+#+end_src
 
 ;; Company mode is a standard completion package that works well with lsp-mode.
 (use-package company
