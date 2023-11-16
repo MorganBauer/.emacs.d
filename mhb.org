@@ -150,9 +150,7 @@ Configure look and feel.
 
 ;; visual-line mode for long lines
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-(use-package visual-line-mode
-  :ensure nil ; do not load built-ins
-  :hook org-mode)
+(global-visual-line-mode)
 
 ;; maybe more understandable undo
 (use-package undo-tree)
