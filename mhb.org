@@ -56,6 +56,9 @@ what is abbrev tables? abbrev_defs file?
 C-x h to highlight/select/mark the whole buffer
 C-M-\ to run indent-region
 
+** fix marking on mac os by disabling input source switching [2023-05-01 Mon]
+https://emacs.stackexchange.com/questions/21285/set-mark-command-c-spc-not-recognised-broken/21311#21311
+
 ** recentering and cursor movement - also see scrolling
 M-r to move cursor around on screen, middle, top, bottom.
 I don't find this terribly useful.
