@@ -245,7 +245,7 @@ if a timestamp comment is at the top, update the timestamp
       delete-old-versions t ; Don't ask to delete excess backup versions.
       backup-by-copying t) ; Copy all files, don't rename them.
 ;;;  don't pollute the fs
-(defconst mhb-auto-save-folder (expand-file-name "~/.emacs.d/auto-save/") "where auto-save files and backups will be stored")
+(defconst mhb-auto-save-folder (expand-file-name "auto-save/" user-emacs-directory) "where auto-save files and backups will be stored")
 (make-directory mhb-auto-save-folder t) ; make the dir if it doesn't exist
 
 (setq backup-directory-alist
