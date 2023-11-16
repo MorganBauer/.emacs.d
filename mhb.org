@@ -322,29 +322,31 @@ if a timestamp comment is at the top, update the timestamp
    (use-package rainbow-delimiters
      :ensure t)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-
-   ;; Optional - provides fancier overlays.
-   (use-package lsp-ui
-     :ensure t
-     :commands lsp-ui-mode)
    #+end_src
 ** Language Server Protocol
 Many languages are supporting 'language server protocol'
 
+*** eglot
+
+Available by default as of emacs 29.
+
+For now, let's use-package eglot to set it up.
+
+#+begin_src emacs-lisp
+(use-package eglot)
+#+end_src
+
+*** lsp-mode
+
 lsp-mode is more global than any specific language
 
 copied from https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
-#+begin_src emacs-lisp
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (go-mode . lsp-deferred))
 
-;; Optional - provides fancier overlays.
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode
-  :init)
+Since lsp is reading from a seperate process, and that process usually generates huge json, increase the amount from 4k to 1m.
+#+begin_src emacs-lisp
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+#+end_src
+
 
 ;; Company mode is a standard completion package that works well with lsp-mode.
 (use-package company
