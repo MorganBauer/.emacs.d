@@ -483,34 +483,22 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
   (use-package flycheck-golangci-lint
     :ensure t
     :hook (go-mode . flycheck-golangci-lint-setup))
-  ;; (use-package company-quickhelp :ensure t :config (company-quickhelp-mode))
-         (add-hook 'go-mode-hook 'flyspell-prog-mode)
+;; goimports formats the file like gofmt, and also fixes up imports
+(setq gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+(add-hook 'go-mode-hook 'flyspell-prog-mode)
 
          ;; add tags to structs for things like json/protos/etc
          (use-package go-tag
            :ensure t)
          (setq go-tag-args (list "-transform" "camelcase"))
 
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
+(define-key go-mode-map [remap godef-jump] 'xref-find-definitions)
 
-
-(setq lsp-gopls-staticcheck t)
-(setq lsp-eldoc-render-all t)
-(setq lsp-gopls-complete-unimported t)
-
-
-(setq lsp-ui-doc-enable nil
-      lsp-ui-peek-enable t
-      lsp-ui-sideline-enable t
-      lsp-ui-imenu-enable t
-      lsp-ui-flycheck-enable t)
-
-
-(define-key go-mode-map [remap godef-jump] 'lsp-find-definition)
+;; eglot hookup
+(add-hook 'go-mode-hook #'eglot-ensure)
 #+end_src
 
 ** R programming statistical language config of ess
