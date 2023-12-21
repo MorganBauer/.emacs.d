@@ -485,10 +485,14 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
   (use-package flycheck-golangci-lint
     :ensure t
     :hook (go-mode . flycheck-golangci-lint-setup))
-;; goimports formats the file like gofmt, and also fixes up imports
-(setopt gofmt-command "goimports")
-(add-hook 'before-save-hook 'gofmt-before-save)
 
+(defun mhb/go-before-save-hook ()
+  (call-interactively 'eglot-code-action-organize-imports))
+(defun mhb/add-gofmt ()
+  (when (eq 'go-mode major-mode)
+    (add-hook 'before-save-hook 'eglot-format-buffer -10 'local) ;; give formatter slight priority
+    (add-hook 'before-save-hook 'mhb/go-before-save-hook nil 'local)))
+(add-hook 'go-mode-hook 'mhb/add-gofmt)
 (add-hook 'go-mode-hook 'flyspell-prog-mode)
 
          ;; add tags to structs for things like json/protos/etc
