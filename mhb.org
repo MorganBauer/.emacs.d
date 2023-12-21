@@ -398,11 +398,11 @@ M-. runs the command xref-find-definitions (found in global-map)
   #+END_SRC
 ** magit
 
-   #+BEGIN_SRC emacs-lisp
-   (use-package magit
-     :bind
-     ("C-x g" . magit-status))
-   #+end_src
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :bind
+  ("C-x g" . magit-status))
+#+end_src
 
 ** shell
 *** bats
