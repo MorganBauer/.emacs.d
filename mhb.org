@@ -50,7 +50,7 @@ debug what is loading the deprecated 'cl package
 (file-dependents (feature-file 'cl))
 
 set this as early as possible to take effect
-(setq debug-on-error 't)
+(setopt debug-on-error 't)
 
 * future work
 
@@ -88,7 +88,7 @@ This is nice for aligning buffers to visually diff them.
 * interface stuff
 Configure look and feel.
 #+begin_src emacs-lisp
-(setq scroll-conservatively 3)
+(setopt scroll-conservatively 3)
 
 (use-package zenburn-theme
   :config (enable-theme 'zenburn))
@@ -97,7 +97,7 @@ Configure look and feel.
 
 ;; misc interface stuff
 (show-paren-mode t) ;highlight matching parens
-(setq x-stretch-cursor t) ;show full character widths
+(setopt x-stretch-cursor t) ;show full character widths
 (tool-bar-mode 0) ; no clickable gui icons, no floppy disks to save
 (size-indication-mode t) ; where in the file the cursor is
 (column-number-mode t) ; show column number with line number in mode line
@@ -135,20 +135,20 @@ Configure look and feel.
 (when (find-font (font-spec :name "IBM Plex Mono"))
   (if (memq window-system '(mac ns))
       ;; size 17 allows two 120 char side by side on the imac
-      (setq default-frame-alist '((font . "IBM Plex Mono 12")))
+      (setopt default-frame-alist '((font . "IBM Plex Mono 12")))
     ;; size 14 is enough for two 80 side by side at roughly full HD 1080p
-    (setq default-frame-alist '((font . "IBM Plex Mono 14")))))
+    (setopt default-frame-alist '((font . "IBM Plex Mono 14")))))
 ;; load a backup font on windows to enable emoji
 (if (memq window-system '(w32))
     (set-fontset-font t nil "Segoe UI Emoji" nil 'append))
 ;; tab to complete
-(setq tab-always-indent 'complete)
+(setopt tab-always-indent 'complete)
 
 ;; maximize on startup
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 ;; visual-line mode for long lines
-(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+(setopt visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 (global-visual-line-mode)
 
 ;; maybe more understandable undo
@@ -209,7 +209,7 @@ Not really remembering to use vterm.
   #+begin_src emacs-lisp
     ;; mac specific stuff ;; mac and ns are the same, in reference to the NextStep that became osx/macos. See also, GnuStep
     (when (memq window-system '(mac ns))
-      (setq mac-command-key-is-meta nil
+      (setopt mac-command-key-is-meta nil
             mac-command-modifier nil
             mac-option-key-is-meta t
             mac-option-modifier 'meta)
@@ -224,13 +224,13 @@ Not really remembering to use vterm.
 Most of the notices about lockfiles seem to be spurious. I rarely edit
 the same file in two different eamcs-es.
   #+begin_src emacs-lisp
-    (setq create-lockfiles nil)
+  (setopt create-lockfiles nil)
   #+end_src
 
 ** time stamps
 if a timestamp comment is at the top, update the timestamp
   #+begin_src emacs-lisp
-    (setq 
+    (setopt
       time-stamp-active t          ; do enable time-stamps
       time-stamp-line-limit 10     ; check first 10 buffer lines for
                                    ; 'Time-stamp:'
@@ -243,8 +243,8 @@ if a timestamp comment is at the top, update the timestamp
 
 ** auto-save 
 #+begin_src emacs-lisp
-(setq vc-make-backup-files t)
-(setq version-control t ; Use version numbers for backups.
+(setopt vc-make-backup-files t
+      version-control t ; Use version numbers for backups.
       kept-new-versions 10 ; Number of newest versions to keep.
       kept-old-versions 1 ; Number of oldest versions to keep.
       delete-old-versions t ; Don't ask to delete excess backup versions.
@@ -253,7 +253,7 @@ if a timestamp comment is at the top, update the timestamp
 (defconst mhb-auto-save-folder (expand-file-name "auto-save/" user-emacs-directory) "where auto-save files and backups will be stored")
 (make-directory mhb-auto-save-folder t) ; make the dir if it doesn't exist
 
-(setq backup-directory-alist
+(setopt backup-directory-alist
   (list (cons "." mhb-auto-save-folder)))
 (setq auto-save-file-name-transforms
   (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" (concat mhb-auto-save-folder "\\2"))))
@@ -266,7 +266,7 @@ if a timestamp comment is at the top, update the timestamp
    ;; this is going to need adjustment on windows for ssh and controlmaster
    ;; controlmaster should match ssh/config to reuse those configurations
    (use-package tramp)
-   (setq tramp-default-method "rsync"
+   (setopt tramp-default-method "rsync"
          tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='~/.ssh/master-%%r@%%h:%%p' -o ControlPersist=15m")
    #+end_src
 * flyspell
@@ -274,7 +274,7 @@ if a timestamp comment is at the top, update the timestamp
 (use-package flyspell
   :ensure t)
 (add-hook 'text-mode-hook 'flyspell-mode)
-(setq flyspell-issue-message-flag nil)
+(setopt flyspell-issue-message-flag nil)
 (global-set-key (kbd "<f8>") 'flyspell-buffer)
 ;; windows configuration for spell check program
 #+end_src
@@ -296,7 +296,7 @@ if a timestamp comment is at the top, update the timestamp
     (require 'org-id)
     ;;(use-package org-journal)
 
-    (setq org-src-fontify-natively t ; make source code look like source code
+  (setopt org-src-fontify-natively t ; make source code look like source code
           org-src-tab-acts-natively t ; make tab-key work in source code blocks, see fn org-indent-line
           org-src-preserve-indentation nil ;; default, use minimum number of leading spaces
           org-edit-src-content-indentation 0 ;; the minimum number of leading spaces to use.
@@ -310,7 +310,7 @@ if a timestamp comment is at the top, update the timestamp
           org-clock-sound t ; actually alert me when something happens
           )
     (add-to-list 'org-babel-load-languages '(dot . t))
-    (setq org-confirm-babel-evaluate nil)
+    (setopt org-confirm-babel-evaluate nil)
 
     (use-package ox-hugo
       :ensure t
@@ -374,7 +374,7 @@ M-. runs the command xref-find-definitions (found in global-map)
 #+begin_src emacs-lisp
 (let ((has-ripgrep (executable-find "rg")))
   (if has-ripgrep
-      (setq xref-search-program 'ripgrep)))
+      (setopt xref-search-program 'ripgrep)))
 #+end_src
 
 ;; Company mode is a standard completion package that works well with lsp-mode.
@@ -486,7 +486,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
     :ensure t
     :hook (go-mode . flycheck-golangci-lint-setup))
 ;; goimports formats the file like gofmt, and also fixes up imports
-(setq gofmt-command "goimports")
+(setopt gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 (add-hook 'go-mode-hook 'flyspell-prog-mode)
@@ -494,7 +494,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
          ;; add tags to structs for things like json/protos/etc
          (use-package go-tag
            :ensure t)
-         (setq go-tag-args (list "-transform" "camelcase"))
+         (setopt go-tag-args (list "-transform" "camelcase"))
 
 (define-key go-mode-map [remap godef-jump] 'xref-find-definitions)
 
@@ -515,7 +515,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 
 ** javascript
    #+begin_src emacs-lisp
-   (setq js-indent-level 2)
+   (setopt js-indent-level 2)
    #+end_src
 ** plantuml - uml extensions
   #+BEGIN_SRC emacs-lisp
@@ -642,7 +642,7 @@ host
 * load some buffers by default
 
 #+begin_src emacs-lisp
-(setq initial-buffer-choice "~/sync/org-notes/todo.org")
+(setopt initial-buffer-choice "~/sync/org-notes/todo.org")
 (add-hook 'emacs-startup-hook
           (lambda ()
             (goto-char (point-max))))
