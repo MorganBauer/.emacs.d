@@ -37,11 +37,14 @@ and those should essentially come from whatever is defined as being use-package'
                              (float-time
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
-
-;; how to check for the native-comp availability from emacs 28 on
-;; (fboundp 'native-comp-available-p)
-;; (native-comp-available-p)
 #+end_src
+
+Check for the native-comp availability from emacs 28 and later versions.
+
+(fboundp 'native-comp-available-p)
+(native-comp-available-p)
+
+On arch, install emacs-nativecomp or emacs-wayland, as from wiki https://wiki.archlinux.org/title/Emacs
 
 * debug file loading
 debug what is loading the deprecated 'cl package
