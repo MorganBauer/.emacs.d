@@ -14,8 +14,8 @@
       package-archive-priorities ;; otherwise everything has the same 0 priority
       '(("gnu" . 5)
         ("nongnu" . 4)
-        ("melpa-stable" . 3)
-        ("melpa". 2)))
+        ("melpa-stable" . 2)
+        ("melpa". 3)))
 
 (package-initialize)
 ;; Bootstrap `use-package'
