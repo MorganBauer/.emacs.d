@@ -272,6 +272,13 @@ if a timestamp comment is at the top, update the timestamp
    (setopt tramp-default-method "rsync"
          tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='~/.ssh/master-%%r@%%h:%%p' -o ControlPersist=15m")
    #+end_src
+
+** recentf
+
+Look into recent files mode `recentf-mode`.
+
+Store the files in a local cache, not the emacs-directory, or otherwise sequestered by hostname.
+
 * flyspell
 #+begin_src emacs-lisp
 (use-package flyspell
