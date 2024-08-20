@@ -343,6 +343,12 @@ language. In addition, the modes are separate from the normally
 available language based modes. For example, go-mode and the
 corresponding tree-sitter mode go-ts-mode.
 
+** lua
+#+begin_src emacs-lisp
+(use-package lua-mode
+  :ensure t)
+#+end_src
+
 ** Language Server Protocol
 Many languages are supporting 'language server protocol'
 
