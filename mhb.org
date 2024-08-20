@@ -1,11 +1,19 @@
 #+TITLE: emacs configuration file
 
+* TODO my personal config
+#+BEGIN_SRC emacs-lisp
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+#+END_SRC
+
 * general notes
 variables are prefixed with my initials, mhb, to attempt to provide uniqueness
 
 **  Open the loaded config file, wherever it is
 #+BEGIN_SRC emacs-lisp
 (defun mhb-find-file-config ()
+  "Open the init.el file."
   (interactive)
   (find-file user-init-file))
 #+END_SRC
@@ -252,7 +260,7 @@ if a timestamp comment is at the top, update the timestamp
       delete-old-versions t ; Don't ask to delete excess backup versions.
       backup-by-copying t) ; Copy all files, don't rename them.
 ;;;  don't pollute the fs
-(defconst mhb-auto-save-folder (expand-file-name "auto-save/" user-emacs-directory) "where auto-save files and backups will be stored")
+(defconst mhb-auto-save-folder (expand-file-name "auto-save/" user-emacs-directory) "Where auto-save files and backups will be stored.")
 (make-directory mhb-auto-save-folder t) ; make the dir if it doesn't exist
 
 (setopt backup-directory-alist
@@ -497,13 +505,15 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
   (use-package flycheck-golangci-lint
     :hook (go-mode . flycheck-golangci-lint-setup))
 
-(defun mhb/go-before-save-hook ()
+(defun mhb-go-before-save-hook ()
+  "This eglot function is interactive, so wrap to to be non-interactive."
   (call-interactively 'eglot-code-action-organize-imports))
-(defun mhb/add-gofmt ()
+(defun mhb-add-gofmt ()
+  "Combine the functions to run, but also only add them to the go-mode 'before-save-hook' rather than every 'before-save-hook'."
   (when (eq 'go-mode major-mode)
     (add-hook 'before-save-hook 'eglot-format-buffer -10 'local) ;; give formatter slight priority
-    (add-hook 'before-save-hook 'mhb/go-before-save-hook nil 'local)))
-(add-hook 'go-mode-hook 'mhb/add-gofmt)
+    (add-hook 'before-save-hook 'mhb-go-before-save-hook nil 'local)))
+(add-hook 'go-mode-hook 'mhb-add-gofmt)
 (add-hook 'go-mode-hook 'flyspell-prog-mode)
 
          ;; add tags to structs for things like json/protos/etc
@@ -675,5 +685,7 @@ host
 Look into documentation section 'Saving Emacs Sessions'.
 Look into saving registers, which could be window arrangements.
 
-  #+begin_src emacs-lisp
-  #+end_src
+* end section
+#+begin_src emacs-lisp
+;;; mhb.el ends here
+#+end_src
