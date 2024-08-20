@@ -297,7 +297,9 @@ Store the files in a local cache, not the emacs-directory, or otherwise sequeste
   You can run the command ‘org-babel-mark-block’ with C-c C-v C-M-h
 
   #+BEGIN_SRC emacs-lisp
-    (use-package org)
+    (use-package org
+        :custom
+        (org-clock-sound t "Make emacs beep."))
     (use-package org-contrib)
 
     (require 'ob-tangle)
@@ -317,7 +319,6 @@ Store the files in a local cache, not the emacs-directory, or otherwise sequeste
           org-agenda-include-diary t
           org-directory "~/sync/org-notes"
           org-default-notes-file (concat org-directory "/notes.org")
-          org-clock-sound t ; actually alert me when something happens
           )
     (add-to-list 'org-babel-load-languages '(dot . t))
     (setopt org-confirm-babel-evaluate nil)
