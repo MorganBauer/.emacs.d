@@ -5,6 +5,12 @@
 ;;; Code:
 (setq gc-cons-threshold most-positive-fixnum)
 
+;; put the eln into a local cache instead of the user-emacs-directory.
+(when (fboundp 'startup-redirect-eln-cache)
+  (startup-redirect-eln-cache
+   (convert-standard-filename
+    (expand-file-name  "eln-cache/" "~/.cache/"))))
+
 ;; set up packaging
 (require 'package)
 (setq package-enable-at-startup nil)
