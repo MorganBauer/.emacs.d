@@ -81,7 +81,6 @@ This is nice for aligning buffers to visually diff them.
 * gpg/pgp
 #+BEGIN_SRC emacs-lisp
 (use-package pinentry
-   :ensure t
    :config
    (unless (memq window-system '(w32))
      (pinentry-start)))
@@ -173,11 +172,11 @@ Configure look and feel.
 possible replacement in ivy mode, with counsel and swiper
    #+begin_src emacs-lisp
    (use-package ivy
-     :ensure t)
+     )
    (ivy-mode 1)
 
    (use-package flx
-     :ensure t)
+     )
    (setq ivy-re-builders-alist
      '((t . ivy--regex-plus)))
 
@@ -197,7 +196,7 @@ possible replacement in ivy mode, with counsel and swiper
 ** Needs documentation
 #+BEGIN_SRC emacs-lisp
 (use-package whole-line-or-region
-  :ensure t)
+  )
 #+END_SRC
 
 ** vterm
@@ -282,7 +281,7 @@ Store the files in a local cache, not the emacs-directory, or otherwise sequeste
 * flyspell
 #+begin_src emacs-lisp
 (use-package flyspell
-  :ensure t)
+  )
 (add-hook 'text-mode-hook 'flyspell-mode)
 (setopt flyspell-issue-message-flag nil)
 (global-set-key (kbd "<f8>") 'flyspell-buffer)
@@ -324,18 +323,16 @@ Store the files in a local cache, not the emacs-directory, or otherwise sequeste
     (setopt org-confirm-babel-evaluate nil)
 
     (use-package ox-hugo
-      :ensure t
       :after ox)
   #+END_SRC
 * programming languages
 
    #+begin_src emacs-lisp
    (use-package auto-highlight-symbol
-     :ensure t)
+     )
    (global-auto-highlight-symbol-mode t)
 
    (use-package rainbow-delimiters
-     :ensure t)
    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
    #+end_src
 ** tree-sitter ???
@@ -347,7 +344,7 @@ corresponding tree-sitter mode go-ts-mode.
 ** lua
 #+begin_src emacs-lisp
 (use-package lua-mode
-  :ensure t)
+  )
 #+end_src
 
 ** Language Server Protocol
@@ -403,7 +400,6 @@ M-. runs the command xref-find-definitions (found in global-map)
 
 ;; Optional - provides snippet support.
 (use-package yasnippet
-  :ensure t
   :commands yas-minor-mode
   :hook (go-mode . yas-minor-mode))
 #+end_src
@@ -438,7 +434,6 @@ This is where I put the information on elisp.
 *** scheme
     #+begin_src emacs-lisp
     (use-package geiser
-      :ensure t
       :config
     ;(setq geiser-repl-use-other-window nil)
     (setq geiser-active-implementations '(guile)
@@ -500,7 +495,6 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 
 #+begin_src emacs-lisp
   (use-package flycheck-golangci-lint
-    :ensure t
     :hook (go-mode . flycheck-golangci-lint-setup))
 
 (defun mhb/go-before-save-hook ()
@@ -514,7 +508,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 
          ;; add tags to structs for things like json/protos/etc
          (use-package go-tag
-           :ensure t)
+           )
          (setopt go-tag-args (list "-transform" "camelcase"))
 
 (define-key go-mode-map [remap godef-jump] 'xref-find-definitions)
@@ -541,7 +535,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 ** plantuml - uml extensions
   #+BEGIN_SRC emacs-lisp
     (use-package plantuml-mode
-      :ensure t)
+      )
   #+END_SRC
 ** latex
   #+BEGIN_SRC emacs-lisp
@@ -558,7 +552,7 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
 ** yaml
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
-   :ensure t)
+   )
 #+END_SRC
 
 ** python
@@ -581,7 +575,6 @@ ropemacs, pymacs
 *** kubernetes
 #+begin_src emacs-lisp
 (use-package k8s-mode
-  :ensure t
   :hook (k8s-mode . yas-minor-mode))
 #+end_src
 
@@ -599,7 +592,6 @@ Markdown used in many open source projects. Pre-req for some other packages.
 * bbdb 
   #+begin_src emacs-lisp
   ;; (use-package bbdb
-  ;; :ensure t
   ;;  :init (bbdb-initialize)
   ;; )
   #+end_src
@@ -613,7 +605,7 @@ Markdown used in many open source projects. Pre-req for some other packages.
 
   #+begin_src emacs-lisp
   (use-package erc
-    :ensure t)
+    )
     ;;  (require 'erc-social-graph)
   #+end_src
 
@@ -675,7 +667,7 @@ host
 
 #+begin_src emacs-lisp
   (use-package uuidgen
-      :ensure t)
+      )
 #+end_src
 
 ** desktop configuration
