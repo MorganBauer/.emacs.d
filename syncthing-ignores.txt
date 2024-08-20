@@ -10,3 +10,6 @@
 (?d)*.eln
 (?d)*.elc
 !mhb.org
+# nothing in custom should remain other than installed packages,
+# which should be directed by the org init file.
+custom.el
