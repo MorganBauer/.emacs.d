@@ -672,32 +672,8 @@ host
 #+end_src
 
 ** desktop configuration
-why must this be after everything? I don't think the desktop stuff
-works anyway.
-
-  #+begin_src emacs-lisp
-;; desktop configuration. automatically save and load emacs buffers.
-;;(require 'desktop)
-;;(desktop-save-mode t)
-;;(defvar mhb-desktop-save-folder "~/.emacs.d/desktop/")
-;;(make-directory mhb-desktop-save-folder t) ; make the dir if it doesn't exist
-;;(setq desktop-path (list mhb-desktop-save-folder))
-;;(setq desktop-dirname mhb-desktop-save-folder)
-;;(setq desktop-base-file-name "emacs-desktop")
-
-;;(add-to-list 'desktop-modes-not-to-save 'dired-mode)
-;;(add-to-list 'desktop-modes-not-to-save 'Info-mode)
-;;(add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
-;;(add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
-
-(defun my-desktop-save ()
-  (interactive)
-  ;; Don't call desktop-save-in-desktop-dir, as it prints a message.
-  (if (eq (desktop-owner) (emacs-pid))
-      (desktop-save desktop-dirname)))
-;;(add-hook 'auto-save-hook 'my-desktop-save)
-;; end desktop config
-  #+end_src
+Look into documentation section 'Saving Emacs Sessions'.
+Look into saving registers, which could be window arrangements.
 
   #+begin_src emacs-lisp
   #+end_src
