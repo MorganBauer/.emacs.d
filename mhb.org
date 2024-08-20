@@ -538,16 +538,17 @@ replace ‘slime-lisp-mode-hook’ with ‘sly-editing-mode’.
       )
   #+END_SRC
 ** latex
-  #+BEGIN_SRC emacs-lisp
-    ;; auctex is loaded as tex
-    (use-package tex
-       :ensure auctex)
-    (setq TeX-auto-save t
-          TeX-parse-self t)
-    ;;(use-package ox-moderncv
-    ;;    :load-path "path_to_repository/org-cv/"
-    ;;    :init (require 'ox-moderncv))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package tex ; auctex is loaded as tex
+   :ensure auctex
+   :custom
+(TeX-auto-save t)
+(TeX-parse-self t))
+#+END_SRC
+
+Org exporter for curriculum vitae
+https://gitlab.com/Titan-C/org-cv
+https://github.com/Titan-C/org-cv
 
 ** yaml
 #+BEGIN_SRC emacs-lisp
