@@ -154,7 +154,8 @@ Configure look and feel.
 (global-visual-line-mode)
 
 ;; maybe more understandable undo
-(use-package undo-tree)
+;; I have not used this.
+;; (use-package undo-tree)
 
 ;; help discoverability with quick-help and which-key
 #+end_src
