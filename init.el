@@ -36,8 +36,9 @@
     (setq use-package-always-demand t))
 
 ;; not sure if I use this, but is used to rename modes in the modeline
-(use-package delight
-  :ensure t)
+;; use only one or the other, not both, as they both act on the modeline
+;; (use-package diminish)
+;; (use-package delight)
 
 ;; load the real init file after everything else
 ;; TODO: investigate  (setq package-enable-at-startup nil)
