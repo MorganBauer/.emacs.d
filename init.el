@@ -28,7 +28,8 @@
 (require 'bind-key) ;; for using :bind in use-package declarations
 
 ;; Install packages automatically.
-(setq use-package-always-ensure t)
+(require 'use-package-ensure)
+(setopt use-package-always-ensure t)
 
 ;; Load everything if running as a daemon.
 (if (daemonp)
