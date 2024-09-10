@@ -41,10 +41,7 @@ and those should essentially come from whatever is defined as being use-package'
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "Emacs ready in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
+                     (emacs-init-time) gcs-done)))
 #+end_src
 
 Check for the native-comp availability from emacs 28 and later versions.
