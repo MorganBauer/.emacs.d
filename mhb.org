@@ -651,7 +651,7 @@ host
   #+begin_src emacs-lisp
     (use-package dired
       :ensure nil ;; built-in package, don't try to go find it
-      :hook (dired-mode . dired-hide-details-mode)
+      ;; :hook (dired-mode . dired-hide-details-mode)
       :config
       ;; Colourful columns.
       (use-package diredfl
