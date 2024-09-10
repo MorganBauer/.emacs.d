@@ -97,6 +97,7 @@ Configure look and feel.
 (setopt scroll-conservatively 3)
 
 (use-package zenburn-theme
+  :demand t
   :config (enable-theme 'zenburn))
 ;; alternate themes, with enhanced visual accessibility
 (use-package modus-themes)
