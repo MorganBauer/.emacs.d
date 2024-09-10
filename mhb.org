@@ -653,8 +653,9 @@ host
       :ensure nil ;; built-in package, don't try to go find it
       ;; :hook (dired-mode . dired-hide-details-mode)
       :config
+      (use-package dired-x :ensure nil :demand t)
       ;; Colourful columns.
-      (use-package diredfl
+      (use-package diredfl :demand t
         :config
         (diredfl-global-mode 1)))
 
