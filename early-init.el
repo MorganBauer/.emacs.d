@@ -3,7 +3,8 @@
 ;; This must be done here, as package initialization happens before my
 ;; personal configuration takes place.
 ;;; Code:
-(setq gc-cons-threshold most-positive-fixnum)
+(setopt gc-cons-threshold most-positive-fixnum
+        garbage-collection-messages t)
 
 ;; put the eln into a local cache instead of the user-emacs-directory.
 (when (fboundp 'startup-redirect-eln-cache)
