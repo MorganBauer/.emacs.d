@@ -2,6 +2,7 @@
 
 * TODO my personal config
 #+BEGIN_SRC emacs-lisp
+;;; ...  -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:

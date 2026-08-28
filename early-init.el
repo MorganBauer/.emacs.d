@@ -1,3 +1,4 @@
+;;; ...  -*- lexical-binding: t -*-
 ;;; package --- Summary
 ;;; Commentary:
 ;; This must be done here, as package initialization happens before my
